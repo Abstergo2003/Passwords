@@ -1,0 +1,279 @@
+* {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  --hover: rgba(255, 255, 255, 0.15);
+  --text: rgb(192, 192, 192);
+  --back: rgba(255, 255, 255, 0.05);
+  --true: rgb(236, 208, 45);
+  --false: transparent;
+  font-family: 'Oxanium';
+  font-weight: inherit;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Oxanium';
+  font-weight: 500;
+}
+button:hover {
+  background-color: var(--hover)
+}
+.options {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 6vh;
+}
+.options input {
+  position: absolute;
+  bottom: 0.5vh;
+  left: 25vw;
+  color: white;
+  height: calc(4vh - 10px);
+  width: calc(25vw - 10px);
+  font-size: 2.5vh;
+  outline: none;
+  border: 1px solid grey;
+  border-radius: 5px;
+  transition: all .3s ease-in-out;
+  padding: 5px;
+  font-family: 'Oxanium';
+}
+.options input:hover {
+  background-color: var(--hover)
+}
+.options button {
+  position: absolute;
+  bottom: 0.5vh;
+  height: 4vh;
+  width: 6vh;
+  border: 1px solid grey;
+  transition: all .3s ease-in-out;
+  border-radius: 3px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+#close {
+  background-image: url(arrows_circle_remove.svg);
+  left: 1vw;
+}
+#addPosition {
+  background-image: url(arrows_circle_plus.svg);
+  left: 51vw;
+}
+#settings {
+  background-image: url(basic_gear.svg);
+  right: 2vw;
+  background-size: 50%;
+}
+#lockSession {
+  background-image: url(basic_ban.svg);
+  right: calc(3vw + 6vh);
+  background-size: 50%;
+}
+.categories {
+  position: relative;
+  left: 0;
+  top: 0vh;
+  height: 94vh;
+  width: 25vw;
+  overflow-y: auto;
+}
+.items {
+  position: relative;
+  left: 25vw;
+  top: -94vh;
+  height: 94vh;
+  width: 25vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.details {
+  position: relative;
+  left: 50vw;
+  top: -188vh;
+  height: 94vh;
+  width: 50vw;
+}
+.categories p {
+  font-size: 2.3vh;
+  color: white;
+  padding: 10px;
+  font-family: 'Oxanium';
+  font-weight: 700;
+}
+.categories span {
+  margin-left: 3vw;
+  width: calc(20vw - 6vh);
+  height: 5vh;
+  display: block;
+  color: var(--text);
+  font-size: 2.5vh;
+  line-height: 5vh;
+  transition: all .3s ease-in-out;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-family: 'Oxanium';
+  font-weight: 500;
+  background-position: 0.75vh;
+  background-size: 3.5vh;
+  background-repeat: no-repeat;
+  padding-left: 6vh;
+}
+.categories span:hover {
+  background-color: var(--hover);
+}
+.items p {
+  display: block;
+  width: calc(25vw - 20px);
+  font-size: 2vh;
+  color: grey;
+  padding-left: 20px;
+  font-family: 'Oxanium';
+  font-weight: 700;
+}
+.main-info {
+  position: relative;
+  left: 50%;
+  top: 2vh;
+  transform: translateX(-50%);
+  width: 40vw;
+  height: 8vh;
+  transition: all .3s ease-in-out;
+}
+.main-info img {
+  position: absolute;
+  top: 1vh;
+  left: 1vh;
+  width: 6vh;
+  height: 6vh;
+}
+.main-info span:nth-child(2) {
+  position: absolute;
+  top: 1vh;
+  left: 9vh;
+  font-size: 2.5vh;
+  color: var(--text);
+}
+.main-info span:nth-child(3) {
+  position: absolute;
+  bottom: 1vh;
+  left: 9vh;
+  font-size: 2vh;
+  color: var(--text);
+}
+.main-info button {
+  position: absolute;
+  top: 2vh;
+  height: 4vh;
+  width: 6vh;
+  border: 1px solid grey;
+  transition: all .3s ease-in-out;
+  border-radius: 3px;
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.fields {
+  position: absolute;
+  top: 12vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40vw;
+  max-height: 65vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 5px;
+  border: 1px solid rgb(156, 155, 155);
+}
+.clicked {
+  background-color: var(--hover);
+}
+.attachments {
+  width: 40vw;
+  height: 12vh;
+  position: absolute;
+  bottom: 2vh;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid grey;
+  border-radius: 5px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+.password {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 300px;
+  height: 100px;
+  transform: translate(-50%, -50%);
+  background-color: rgb(39, 37, 37);
+  text-align: center;
+  padding: 30px;
+}
+.password h2 {
+  color: var(--text);
+}
+.password button {
+  height: 4vh;
+  width: 6vh;
+  border: 1px solid grey;
+  transition: all .3s ease-in-out;
+  border-radius: 3px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-app-region: no-drag;
+  background-image: url(arrows_circle_plus.svg);
+  margin-top: 1vh;
+}
+.password input {
+  color: white;
+  height: calc(4vh - 10px);
+  width: calc(25vw - 10px);
+  font-size: 2.5vh;
+  outline: none;
+  border: 1px solid grey;
+  border-radius: 5px;
+  transition: all .3s ease-in-out;
+  padding: 5px;
+  font-family: 'Oxanium';
+  -webkit-app-region: no-drag;
+}
+.password span {
+  font-size: 2.25vh;
+  color: red;
+}
+.toastField {
+  position: absolute;
+  top: 6vh;
+  right: 0;
+  width: 30vw;
+  height: 40vh;
+  background-color: transparent;
+  z-index: -1;
+}
+.toast {
+  position: relative;
+  right: -35vw;
+  width: 28vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  height: 5vh;
+  background-color: gray;
+  opacity: 0.8;
+  color: white;
+  font-size: 3vh;
+  transition: all .3s ease-in-out;
+  overflow: hidden;
+  line-height: 5vh;
+  border-radius: 5px;
+  margin-top: 5px;
+  z-index: 999;
+}

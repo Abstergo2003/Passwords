@@ -1,0 +1,55 @@
+.field {
+    position: relative;
+    width: 100%;
+    background-color: var(--back);
+    border-bottom: 1px solid rgb(90, 89, 89);
+    border-top: 1px solid rgb(90, 89, 89)y;
+}
+.field span {
+    display: inline-block;
+    width: calc(25% - 15px);
+    height: 8vh;
+    line-height: 8vh;
+    font-size: 2.2vh;
+    text-align: right;
+    color: var(--text);
+    padding-right: 15px;
+}
+.field div {
+    display: block;
+    min-height: 8vh;
+    width: calc(90% - 8vh);
+    margin-left: 5%;
+    height: auto;
+    outline: none;
+    border: none;
+    font-size: 3vh;
+    color: white;
+    resize: none;
+    line-height: 8vh;
+}
+.field input {
+    border: none;
+    height: 6vh;
+    margin-top: 1vh;
+    display: inline-block;
+    width: 60%;
+    outline: none;
+    font-size: 3vh;
+    color: white;
+}
+.field button {
+    position: absolute;
+    top: 2vh;
+    right: 2vh;
+    height: 4vh;
+    width: 4vh;
+    border: 1px solid grey;
+    transition: all .3s ease-in-out;
+    border-radius: 3px;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    background-image: url(software_pathfinder_exclude.svg);
+}

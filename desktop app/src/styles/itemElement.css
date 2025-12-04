@@ -1,0 +1,33 @@
+.item {
+    position: relative;
+    width: 25vw;
+    height: 8vh;
+    background-color: var(--back);
+    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
+    transition: all .3s ease-in-out;
+}
+.item:hover {
+    background-color: var(--hover);
+}
+.item img {
+    position: absolute;
+    top: 1vh;
+    left: 1vh;
+    width: 6vh;
+    height: 6vh;
+}
+.item span:nth-child(2) {
+    position: absolute;
+    top: 1vh;
+    left: 9vh;
+    font-size: 2.5vh;
+    color: var(--text);
+}
+.item span:nth-child(3) {
+    position: absolute;
+    bottom: 1vh;
+    left: 9vh;
+    font-size: 2vh;
+    color: var(--text);
+}

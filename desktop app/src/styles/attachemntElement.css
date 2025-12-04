@@ -1,0 +1,22 @@
+.attachments span {
+    width: 8vw;
+    padding-top: 6vh;
+    display: inline-block;
+    height: 4vh;
+    line-height: 4vh;
+    margin-top: 1vh;
+    text-align: center;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    background-image: url(basic_link.svg);
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: center 1vh;
+    color: var(--text);
+    border-radius: 3px;
+    transition: all .3s ease-in-out;
+    overflow: hidden;
+}
+.attachments span:hover {
+    background-color: var(--hover);
+}

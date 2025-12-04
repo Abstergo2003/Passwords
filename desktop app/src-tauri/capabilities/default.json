@@ -1,0 +1,28 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the main window",
+  "windows": ["main", "local"],
+  "permissions": [
+    "core:default",
+    "opener:default",
+    "core:webview:default",
+    {
+      "identifier":     "fs:allow-app-write",
+      "allow": [{"path": "**"}]
+    },
+    {
+      "identifier": "fs:allow-mkdir",
+      "allow": [{"path": "**"}]
+    },
+    {
+      "identifier": "fs:allow-app-read",
+      "allow": [{"path": "**"}]
+    },
+    {
+      "identifier": "fs:allow-write-text-file",
+      "allow": [{"path": "**"}]
+    },
+    "core:window:allow-close"
+  ]
+}

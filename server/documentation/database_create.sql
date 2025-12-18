@@ -1,5 +1,5 @@
 -- Created by Redgate Data Modeler (https://datamodeler.redgate-platform.com)
--- Last modification date: 2025-11-24 14:17:11.855
+-- Last modification date: 2025-12-18 10:44:31.542
 
 -- tables
 -- Table: Attachment
@@ -25,12 +25,13 @@ CREATE TABLE Attachment_Password (
 -- Table: CreditCard
 CREATE TABLE CreditCard (
     id varchar(50)  NOT NULL,
-    bankName varchar(50)  NOT NULL,
-    number varchar(50)  NOT NULL,
-    brand varchar(50)  NOT NULL,
-    cvv varchar(5)  NOT NULL,
-    owner varchar(50)  NOT NULL,
-    expDate varchar(50)  NOT NULL,
+    bankName text  NOT NULL,
+    number text  NOT NULL,
+    brand text  NOT NULL,
+    cvv text  NOT NULL,
+    owner text  NOT NULL,
+    expDate text  NOT NULL,
+    favourite boolean  NOT NULL,
     CONSTRAINT CreditCard_pk PRIMARY KEY (id)
 );
 
@@ -43,14 +44,14 @@ CREATE TABLE CreditCard_Attachment (
 -- Table: Identity
 CREATE TABLE "Identity" (
     id varchar(50)  NOT NULL,
-    name varchar(50)  NOT NULL,
-    surname varchar(50)  NOT NULL,
-    IDnumber varchar(50)  NOT NULL,
-    country varchar(50)  NOT NULL,
-    state varchar(50)  NOT NULL,
-    city varchar(50)  NOT NULL,
-    street varchar(50)  NOT NULL,
-    number varchar(50)  NOT NULL,
+    name text  NOT NULL,
+    surname text  NOT NULL,
+    country text  NOT NULL,
+    state text  NOT NULL,
+    city text  NOT NULL,
+    street text  NOT NULL,
+    number text  NOT NULL,
+    favourite boolean  NOT NULL,
     CONSTRAINT Identity_pk PRIMARY KEY (id)
 );
 
@@ -63,8 +64,9 @@ CREATE TABLE Identity_Attachment (
 -- Table: License
 CREATE TABLE License (
     id varchar(50)  NOT NULL,
-    name varchar(50)  NOT NULL,
-    diverse jsonb  NOT NULL,
+    name text  NOT NULL,
+    diverse text  NOT NULL,
+    favourite boolean  NOT NULL,
     CONSTRAINT License_pk PRIMARY KEY (id)
 );
 
@@ -77,19 +79,21 @@ CREATE TABLE License_Attachment (
 -- Table: Notes
 CREATE TABLE Notes (
     id varchar(50)  NOT NULL,
-    name varchar(50)  NOT NULL,
+    name text  NOT NULL,
     content text  NOT NULL,
+    favourite boolean  NOT NULL,
     CONSTRAINT Notes_pk PRIMARY KEY (id)
 );
 
 -- Table: Password
 CREATE TABLE Password (
     id varchar(50)  NOT NULL,
-    email varchar(50)  NOT NULL,
-    login varchar(50)  NOT NULL,
-    password varchar(50)  NOT NULL,
-    domain varchar(50)  NOT NULL,
-    tfa varchar(50)  NOT NULL,
+    email text  NOT NULL,
+    login text  NOT NULL,
+    password text  NOT NULL,
+    domain text  NOT NULL,
+    tfa text  NOT NULL,
+    favourite boolean  NOT NULL,
     CONSTRAINT Password_pk PRIMARY KEY (id)
 );
 
@@ -126,9 +130,10 @@ CREATE TABLE User_Notes (
 -- Table: Users
 CREATE TABLE Users (
     id varchar(37)  NOT NULL,
-    email varchar(30)  NOT NULL,
-    passwordHash varchar(100)  NOT NULL,
-    tfaCode varchar(100),
+    email text  NOT NULL,
+    passwordHash text  NOT NULL,
+    tfaCode text  NOT NULL,
+    salt text  NOT NULL,
     CONSTRAINT Users_pk PRIMARY KEY (id)
 );
 

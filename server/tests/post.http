@@ -1,0 +1,64 @@
+POST http://localhost:5000/addPassword
+Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA
+
+{
+    "email": "added_mail2@test.co",
+    "login": "added_login2",
+    "password": "addedPassword",
+    "domain": "google.com",
+    "tfa": "hash"
+}
+
+###
+
+POST http://localhost:5000/addNote
+Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA
+
+{
+    "name": "added_note2",
+    "content": "added_note2_content"
+}
+
+###
+
+POST http://localhost:5000/addCreditCard
+Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA
+
+{
+    "bankName": "added_card2",
+    "number": "card_number",
+    "brand": "visa",
+    "cvv": "711",
+    "owner": "Owner 1",
+    "exp_date": "2003/12"
+}
+
+###
+
+POST http://localhost:5000/addIdentity
+Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA
+
+{
+    "name": "name2",
+    "surname": "surname2",
+    "country": "country2",
+    "state": "state2",
+    "city": "city2",
+    "street": "street2",
+    "number": "28"
+}
+
+###
+
+POST http://localhost:5000/addLicense
+Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA
+
+{
+    "name": "name2",
+    "diverse": "{\"number\" : \"0\"}"
+}

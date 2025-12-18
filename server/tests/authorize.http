@@ -1,0 +1,19 @@
+POST http://localhost:5000/register
+Content-Type: application/json
+
+{
+    "email": "test5@test.com",
+    "auth_hash": "hash1",
+    "salt": "salt1"
+}
+
+###
+
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "test5@test.com",
+    "auth_hash": "hash1",
+    "code": "776496"
+}

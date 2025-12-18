@@ -1,0 +1,64 @@
+PUT http://localhost:5000/updatePassword
+Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA; id=01cc4cc5-e967-4f2c-93ab-db77ec07d989
+
+{
+    "email": "added_mail3@test.co",
+    "login": "added_login2",
+    "password": "addedPassword",
+    "domain": "google.com",
+    "tfa": "hash"
+}
+
+###
+
+PUT http://localhost:5000/updateNote
+Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA; id=50f2f632-8594-4810-aa7f-5ebe231e6502
+
+{
+    "name": "added_note3",
+    "content": "added_note2_content"
+}
+
+###
+
+PUT http://localhost:5000/updateCreditCard
+Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA; id=91972609-60fe-45e9-b460-11043dca9a49
+
+{
+    "bankName": "added_card3",
+    "number": "card_number2",
+    "brand": "visa2",
+    "cvv": "712",
+    "owner": "Owner 2",
+    "exp_date": "2003/13"
+}
+
+###
+
+PUT http://localhost:5000/updateIdentity
+Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA; id=b7be96e5-d3fe-4a0b-8305-6af62c2257e6
+
+{
+    "name": "name3",
+    "surname": "surname3",
+    "country": "country3",
+    "state": "state3",
+    "city": "city3",
+    "street": "street3",
+    "number": "29"
+}
+
+###
+
+PUT http://localhost:5000/updateLicense
+Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA; id=442641fe-39cd-46d5-af39-89f67d4da219
+
+{
+    "name": "name3",
+    "diverse": "{\"number2\" : \"2\"}"
+}

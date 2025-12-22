@@ -1,30 +1,30 @@
 -- Created by Redgate Data Modeler (https://datamodeler.redgate-platform.com)
--- Last modification date: 2025-12-18 10:44:31.542
+-- Last modification date: 2025-12-22 15:35:33.854
 
 -- tables
 -- Table: Attachment
 CREATE TABLE Attachment (
-    id varchar(50)  NOT NULL,
-    name varchar(50)  NOT NULL,
+    id varchar(37)  NOT NULL,
+    name text  NOT NULL,
     content text  NOT NULL,
     CONSTRAINT Attachment_pk PRIMARY KEY (id)
 );
 
 -- Table: Attachment_Notes
 CREATE TABLE Attachment_Notes (
-    Attachment_id varchar(50)  NOT NULL,
-    Notes_id varchar(50)  NOT NULL
+    Attachment_id varchar(37)  NOT NULL,
+    Notes_id varchar(37)  NOT NULL
 );
 
 -- Table: Attachment_Password
 CREATE TABLE Attachment_Password (
-    Password_id varchar(50)  NOT NULL,
-    Attachment_id varchar(50)  NOT NULL
+    Password_id varchar(37)  NOT NULL,
+    Attachment_id varchar(37)  NOT NULL
 );
 
 -- Table: CreditCard
 CREATE TABLE CreditCard (
-    id varchar(50)  NOT NULL,
+    id varchar(37)  NOT NULL,
     bankName text  NOT NULL,
     number text  NOT NULL,
     brand text  NOT NULL,
@@ -37,13 +37,13 @@ CREATE TABLE CreditCard (
 
 -- Table: CreditCard_Attachment
 CREATE TABLE CreditCard_Attachment (
-    Attachment_id varchar(50)  NOT NULL,
-    CreditCard_id varchar(50)  NOT NULL
+    Attachment_id varchar(37)  NOT NULL,
+    CreditCard_id varchar(37)  NOT NULL
 );
 
 -- Table: Identity
 CREATE TABLE "Identity" (
-    id varchar(50)  NOT NULL,
+    id varchar(37)  NOT NULL,
     name text  NOT NULL,
     surname text  NOT NULL,
     country text  NOT NULL,
@@ -57,13 +57,13 @@ CREATE TABLE "Identity" (
 
 -- Table: Identity_Attachment
 CREATE TABLE Identity_Attachment (
-    Identity_id varchar(50)  NOT NULL,
-    Attachment_id varchar(50)  NOT NULL
+    Identity_id varchar(37)  NOT NULL,
+    Attachment_id varchar(37)  NOT NULL
 );
 
 -- Table: License
 CREATE TABLE License (
-    id varchar(50)  NOT NULL,
+    id varchar(37)  NOT NULL,
     name text  NOT NULL,
     diverse text  NOT NULL,
     favourite boolean  NOT NULL,
@@ -72,13 +72,13 @@ CREATE TABLE License (
 
 -- Table: License_Attachment
 CREATE TABLE License_Attachment (
-    License_id varchar(50)  NOT NULL,
-    Attachment_id varchar(50)  NOT NULL
+    License_id varchar(37)  NOT NULL,
+    Attachment_id varchar(37)  NOT NULL
 );
 
 -- Table: Notes
 CREATE TABLE Notes (
-    id varchar(50)  NOT NULL,
+    id varchar(37)  NOT NULL,
     name text  NOT NULL,
     content text  NOT NULL,
     favourite boolean  NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE Notes (
 
 -- Table: Password
 CREATE TABLE Password (
-    id varchar(50)  NOT NULL,
+    id varchar(37)  NOT NULL,
     email text  NOT NULL,
     login text  NOT NULL,
     password text  NOT NULL,
@@ -100,30 +100,30 @@ CREATE TABLE Password (
 -- Table: Password_User
 CREATE TABLE Password_User (
     Users_id varchar(37)  NOT NULL,
-    Password_id varchar(50)  NOT NULL
+    Password_id varchar(37)  NOT NULL
 );
 
 -- Table: User_CreditCard
 CREATE TABLE User_CreditCard (
-    CreditCard_id varchar(50)  NOT NULL,
+    CreditCard_id varchar(37)  NOT NULL,
     Users_id varchar(37)  NOT NULL
 );
 
 -- Table: User_Identity
 CREATE TABLE User_Identity (
-    Identity_id varchar(50)  NOT NULL,
+    Identity_id varchar(37)  NOT NULL,
     Users_id varchar(37)  NOT NULL
 );
 
 -- Table: User_License
 CREATE TABLE User_License (
-    License_id varchar(50)  NOT NULL,
+    License_id varchar(37)  NOT NULL,
     Users_id varchar(37)  NOT NULL
 );
 
 -- Table: User_Notes
 CREATE TABLE User_Notes (
-    Notes_id varchar(50)  NOT NULL,
+    Notes_id varchar(37)  NOT NULL,
     Users_id varchar(37)  NOT NULL
 );
 
@@ -135,6 +135,15 @@ CREATE TABLE Users (
     tfaCode text  NOT NULL,
     salt text  NOT NULL,
     CONSTRAINT Users_pk PRIMARY KEY (id)
+);
+
+-- Table: Users_mail
+CREATE TABLE Users_mail (
+    id varchar(37)  NOT NULL,
+    Users_id varchar(37)  NOT NULL,
+    mail text  NOT NULL,
+    CONSTRAINT mail UNIQUE (mail) NOT DEFERRABLE  INITIALLY IMMEDIATE,
+    CONSTRAINT Users_mail_pk PRIMARY KEY (id)
 );
 
 -- foreign keys
@@ -292,6 +301,14 @@ ALTER TABLE User_Notes ADD CONSTRAINT User_Notes_Notes
 
 -- Reference: User_Notes_Users (table: User_Notes)
 ALTER TABLE User_Notes ADD CONSTRAINT User_Notes_Users
+    FOREIGN KEY (Users_id)
+    REFERENCES Users (id)  
+    NOT DEFERRABLE 
+    INITIALLY IMMEDIATE
+;
+
+-- Reference: Users_Mail (table: Users_mail)
+ALTER TABLE Users_mail ADD CONSTRAINT Users_Mail
     FOREIGN KEY (Users_id)
     REFERENCES Users (id)  
     NOT DEFERRABLE 

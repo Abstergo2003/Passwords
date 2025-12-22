@@ -1,1 +1,5 @@
 server/.todoignore
+server/qr.html
+server/test.sh
+server/modules/__pycache__/*
+server/modules/crud/__pycache__/*

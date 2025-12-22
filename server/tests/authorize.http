@@ -15,5 +15,5 @@ Content-Type: application/json
 {
     "email": "test5@test.com",
     "auth_hash": "hash1",
-    "code": "776496"
+    "code": "617227"
 }

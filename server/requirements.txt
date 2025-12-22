@@ -1,0 +1,11 @@
+Flask
+flask-bcrypt
+python-dotenv
+PyJWT
+psycopg2-binary
+pyotp
+qrcode[pil]
+jsonschema
+requests
+cryptography
+gunicorn

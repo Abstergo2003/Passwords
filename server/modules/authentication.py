@@ -41,7 +41,7 @@ def registerUser(email, auth_hash, salt, bcrypt):
     final_hash = bcrypt.generate_password_hash(auth_hash).decode("utf-8")
 
     sql_context = """
-        INSERT INTO Users (id, email, passwordHash, encryption_salt, tfaCode) 
+        INSERT INTO Users (id, email, passwordHash, salt, tfaCode) 
         VALUES (%s, %s, %s, %s, %s)
     """
     cursor.execute(sql_context, (user_id, email, final_hash, salt, ""))

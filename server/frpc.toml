@@ -1,0 +1,23 @@
+serverAddr = "x.x.x.x"
+serverPort = 7000
+auth.token = "token"
+transport.heartbeatInterval = 30
+transport.heartbeatTimeout = 90
+
+
+# --- Tunel 1: API Flask ---
+[[proxies]]
+name = "api_flask"
+type = "tcp"
+localIP = "server"
+localPort = 5000
+remotePort = 6000
+
+# --- Tunel 2: SMTP (Inbucket) ---
+# Przekazuje ruch z portu 25 VPS-a do portu 2500 kontenera mail
+[[proxies]]
+name = "smtp_inbucket"
+type = "tcp"
+localIP = "mail"
+localPort = 2500
+remotePort = 25

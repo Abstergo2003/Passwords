@@ -1,6 +1,6 @@
 POST http://localhost:5000/addPassword
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns
 
 {
     "email": "added_mail2@test.co",
@@ -14,7 +14,7 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtN
 
 POST http://localhost:5000/addNote
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns
 
 {
     "name": "added_note2",
@@ -25,7 +25,7 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtN
 
 POST http://localhost:5000/addCreditCard
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns
 
 {
     "bankName": "added_card2",
@@ -40,7 +40,7 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtN
 
 POST http://localhost:5000/addIdentity
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns
 
 {
     "name": "name2",
@@ -56,7 +56,7 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtN
 
 POST http://localhost:5000/addLicense
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5N2UyMmZlLWVjYzEtNDBlNy04YTE5LThkNDY2YjhlYTUwMCIsImV4cCI6MTc2ODU3ODg4NH0.oeSOzytnrzFtg4FR45tUc5LXvEmksQS3uoWy2wfqZrA
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns
 
 {
     "name": "name2",

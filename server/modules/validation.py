@@ -2,8 +2,6 @@ from jsonschema import validate, ValidationError
 import uuid
 
 
-from jsonschema import validate, ValidationError
-
 USER_EDITABLE_TABLES = [
     "Password",
     "Notes",

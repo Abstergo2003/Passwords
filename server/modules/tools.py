@@ -1,4 +1,8 @@
 from flask import make_response
+from flask_bcrypt import Bcrypt
+
+# Inicjalizujemy obiekt, ale jeszcze bez aplikacji
+bcrypt = Bcrypt()
 
 
 def obfuscateString(input, percentage):

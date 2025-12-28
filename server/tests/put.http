@@ -1,6 +1,6 @@
 PUT http://localhost:5000/updatePassword
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns; id=01cc4cc5-e967-4f2c-93ab-db77ec07d989
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiM2Q2MWRmLWU1ZWMtNDMyOS1iMzM5LWRlNDBhYWRhNzAxOCIsImV4cCI6MTc2OTQzNjQxNn0.16WSIWZl3zrhlUlgWNYATvwpe64drjAyjPY0g6TffYU; id=01cc4cc5-e967-4f2c-93ab-db77ec07d989
 
 {
     "email": "added_mail3@test.co",
@@ -14,7 +14,7 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtN
 
 PUT http://localhost:5000/updateNote
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns; id=50f2f632-8594-4810-aa7f-5ebe231e6502
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiM2Q2MWRmLWU1ZWMtNDMyOS1iMzM5LWRlNDBhYWRhNzAxOCIsImV4cCI6MTc2OTQzNjQxNn0.16WSIWZl3zrhlUlgWNYATvwpe64drjAyjPY0g6TffYU; id=50f2f632-8594-4810-aa7f-5ebe231e6502
 
 {
     "name": "added_note3",
@@ -25,7 +25,7 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtN
 
 PUT http://localhost:5000/updateCreditCard
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns; id=91972609-60fe-45e9-b460-11043dca9a49
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiM2Q2MWRmLWU1ZWMtNDMyOS1iMzM5LWRlNDBhYWRhNzAxOCIsImV4cCI6MTc2OTQzNjQxNn0.16WSIWZl3zrhlUlgWNYATvwpe64drjAyjPY0g6TffYU; id=91972609-60fe-45e9-b460-11043dca9a49
 
 {
     "bankName": "added_card3",
@@ -40,7 +40,7 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtN
 
 PUT http://localhost:5000/updateIdentity
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns; id=b7be96e5-d3fe-4a0b-8305-6af62c2257e6
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiM2Q2MWRmLWU1ZWMtNDMyOS1iMzM5LWRlNDBhYWRhNzAxOCIsImV4cCI6MTc2OTQzNjQxNn0.16WSIWZl3zrhlUlgWNYATvwpe64drjAyjPY0g6TffYU; id=b7be96e5-d3fe-4a0b-8305-6af62c2257e6
 
 {
     "name": "name3",
@@ -56,7 +56,7 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtN
 
 PUT http://localhost:5000/updateLicense
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns; id=442641fe-39cd-46d5-af39-89f67d4da219
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiM2Q2MWRmLWU1ZWMtNDMyOS1iMzM5LWRlNDBhYWRhNzAxOCIsImV4cCI6MTc2OTQzNjQxNn0.16WSIWZl3zrhlUlgWNYATvwpe64drjAyjPY0g6TffYU; id=442641fe-39cd-46d5-af39-89f67d4da219
 
 {
     "name": "name3",

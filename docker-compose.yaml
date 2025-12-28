@@ -2,12 +2,12 @@ version: '3.8'
 
 services:
   # ----------------------------------------
-  # 1. BAZA DANYCH (PostgreSQL)
+  # 1. DATABASE (PostgreSQL)
   # ----------------------------------------
   db:
     image: postgres:15-alpine
     restart: always
-    container_name: password_manager_db
+    container_name: password-vault_database
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
@@ -15,34 +15,29 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./database_create.sql:/docker-entrypoint-initdb.d/init.sql
-      
     networks:
       - backend_network
 
   # ----------------------------------------
-  # 2. SERWER APLIKACJI (Flask)
+  # 2. APPLICATION SERVER (Flask)
   # ----------------------------------------
   server:
-    build: .
+    build: ./server
     restart: always
-    container_name: password_manager_server
+    container_name: password-vault_server
     depends_on:
       - db
       - mail
     ports:
-      - "5000:5000"
+      - "127.0.0.1:5000:5000"
     environment:
-      # Przekazujemy klucze bezpośrednio
       SECRET_KEY: ${SECRET_KEY}
       TOKEN_TIMEDELTA: ${TOKEN_TIMEDELTA}
       
-      # Konfiguracja Bazy Danych
       DATABASE_DATABASE: ${DATABASE_DATABASE}
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       
-      # !!! KLUCZOWA ZMIANA !!!
-      # Nadpisujemy 'localhost' z pliku .env na nazwę serwisu 'db'
       DATABASE_HOST: db 
       DATABASE_PORT: ${DATABASE_PORT}
       
@@ -50,16 +45,45 @@ services:
       - backend_network
 
   # ----------------------------------------
-  # 3. TYMCZASOWE MAILE (Inbucket)
+  # 3. APPLICATION WEBPANEL (Flask)
+  # ----------------------------------------
+  webpanel:
+    build: ./webpanel
+    restart: always
+    container_name: password-vault_webpanel
+    depends_on:
+      - db
+    ports:
+      - "127.0.0.1:5050:5050"
+    volumes:
+      - ./database_backups:/backups
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      TOKEN_TIMEDELTA: ${TOKEN_TIMEDELTA}
+      
+      DATABASE_DATABASE: ${DATABASE_DATABASE}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      
+      DATABASE_HOST: db 
+      DATABASE_PORT: ${DATABASE_PORT}
+      
+    networks:
+      - backend_network
+  # ----------------------------------------
+  # 4. BURNER MAIL (Inbucket)
   # ----------------------------------------
   mail:
     image: inbucket/inbucket:3.0.4
     restart: always
-    container_name: password_manager_mail
+    container_name: password-vault_mail
     environment:
-      INBUCKET_STORAGE_TYPE: file
-      INBUCKET_STORAGE_PARAMS: "path:/storage"
-      INBUCKET_STORAGE_RETENTION_PERIOD: 720h
+      - INBUCKET_STORAGE_TYPE=file
+      - INBUCKET_STORAGE_PATH=/storage
+      
+      - INBUCKET_STORAGE_RETENTION_PERIOD=0
+      
+      - INBUCKET_STORAGE_MAILBOX_CAPACITY=0
     volumes:
       - mail_data:/storage
     networks:
@@ -67,16 +91,21 @@ services:
     ports:
       - "2500:2500" # SMTP
       - "127.0.0.1:9000:9000"
+  
+  # --------------------------------------
+  # 5. FRP Client
+  # --------------------------------------
   frpc:
     image: snowdreamtech/frpc:latest
     restart: always
-    container_name: password_manager_frpc
+    container_name: password-vault_frpc
     volumes:
-      # Montujemy plik TOML w domyślnej lokalizacji
       - ./frpc.toml:/etc/frp/frpc.toml
     command: ["frpc", "-c", "/etc/frp/frpc.toml"]
     networks:
       - backend_network
+    ports:
+      - "7400:7400"
     depends_on:
       - server
       - mail

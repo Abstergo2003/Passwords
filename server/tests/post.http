@@ -1,10 +1,10 @@
 POST http://localhost:5000/addPassword
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiM2Q2MWRmLWU1ZWMtNDMyOS1iMzM5LWRlNDBhYWRhNzAxOCIsImV4cCI6MTc2OTQzNjQxNn0.16WSIWZl3zrhlUlgWNYATvwpe64drjAyjPY0g6TffYU
 
 {
-    "email": "added_mail2@test.co",
-    "login": "added_login2",
+    "email": "added_mail1@test.co",
+    "login": "added_login1",
     "password": "addedPassword",
     "domain": "google.com",
     "tfa": "hash"
@@ -14,21 +14,21 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtN
 
 POST http://localhost:5000/addNote
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiM2Q2MWRmLWU1ZWMtNDMyOS1iMzM5LWRlNDBhYWRhNzAxOCIsImV4cCI6MTc2OTQzNjQxNn0.16WSIWZl3zrhlUlgWNYATvwpe64drjAyjPY0g6TffYU
 
 {
-    "name": "added_note2",
-    "content": "added_note2_content"
+    "name": "added_note1",
+    "content": "added_note1_content"
 }
 
 ###
 
 POST http://localhost:5000/addCreditCard
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiM2Q2MWRmLWU1ZWMtNDMyOS1iMzM5LWRlNDBhYWRhNzAxOCIsImV4cCI6MTc2OTQzNjQxNn0.16WSIWZl3zrhlUlgWNYATvwpe64drjAyjPY0g6TffYU
 
 {
-    "bankName": "added_card2",
+    "bankName": "added_card1",
     "number": "card_number",
     "brand": "visa",
     "cvv": "711",
@@ -40,15 +40,15 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtN
 
 POST http://localhost:5000/addIdentity
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiM2Q2MWRmLWU1ZWMtNDMyOS1iMzM5LWRlNDBhYWRhNzAxOCIsImV4cCI6MTc2OTQzNjQxNn0.16WSIWZl3zrhlUlgWNYATvwpe64drjAyjPY0g6TffYU
 
 {
-    "name": "name2",
-    "surname": "surname2",
-    "country": "country2",
-    "state": "state2",
-    "city": "city2",
-    "street": "street2",
+    "name": "name1",
+    "surname": "surname1",
+    "country": "country1",
+    "state": "state1",
+    "city": "city1",
+    "street": "street1",
     "number": "28"
 }
 
@@ -56,9 +56,9 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtN
 
 POST http://localhost:5000/addLicense
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyM2I5ZWFiLTc2MjAtNDZlYy1iMDViLWU2MjZiODA5ZGI3NSIsImV4cCI6MTc2OTAwNDUwNH0.CleaEaKsmx9UY7ekhrW6e-lw1Ze6oHy-zA42AAUGZns
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiM2Q2MWRmLWU1ZWMtNDMyOS1iMzM5LWRlNDBhYWRhNzAxOCIsImV4cCI6MTc2OTQzNjQxNn0.16WSIWZl3zrhlUlgWNYATvwpe64drjAyjPY0g6TffYU
 
 {
-    "name": "name2",
+    "name": "name1",
     "diverse": "{\"number\" : \"0\"}"
 }

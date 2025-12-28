@@ -3,6 +3,8 @@ serverPort = 7000
 auth.token = "token"
 transport.heartbeatInterval = 30
 transport.heartbeatTimeout = 90
+webServer.addr = "0.0.0.0"
+webServer.port = 7400
 
 
 # --- Tunel 1: API Flask ---
@@ -20,4 +22,4 @@ name = "smtp_inbucket"
 type = "tcp"
 localIP = "mail"
 localPort = 2500
-remotePort = 25
+remotePort = 2525

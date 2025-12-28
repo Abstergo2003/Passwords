@@ -1,6 +1,6 @@
 import uuid
 import requests
-from database import connectToDatabase
+from modules.database import connectToDatabase
 
 # Konfiguracja Inbucketa (nazwa serwisu w sieci Docker)
 INBUCKET_API = "http://mail:9000/api/v1/mailbox"

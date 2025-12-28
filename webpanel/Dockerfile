@@ -5,7 +5,10 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     gcc \
     libpq-dev \
+    postgresql-client \
     && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /backups && chmod 777 /backups
 
 COPY requirements.txt .
 
@@ -16,6 +19,6 @@ COPY . .
 RUN useradd -m appuser && chown -R appuser /app
 USER appuser
 
-EXPOSE 5000
+EXPOSE 5050
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "4", "server:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5050", "--workers", "4", "webpanel:app"]

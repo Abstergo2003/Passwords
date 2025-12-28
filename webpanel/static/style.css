@@ -1,0 +1,110 @@
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg-dark: hsl(205 22% 90%);
+        --bg: hsl(205 46% 95%);
+        --bg-light: hsl(205 100% 100%);
+        --text: hsl(206 63% 4%);
+        --text-muted: hsl(205 14% 28%);
+        --highlight: hsl(205 100% 100%);
+        --border: hsl(205 8% 50%);
+        --border-muted: hsl(205 11% 62%);
+        --primary: hsl(198 100% 20%);
+        --secondary: hsl(32 100% 20%);
+        --danger: hsl(9 21% 41%);
+        --warning: hsl(52 23% 34%);
+        --success: hsl(147 19% 36%);
+        --info: hsl(217 22% 41%);
+    }
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-dark: hsl(209 52% 1%);
+        --bg: hsl(205 33% 4%);
+        --bg-light: hsl(205 18% 9%);
+        --text: hsl(205 93% 95%);
+        --text-muted: hsl(205 15% 70%);
+        --highlight: hsl(205 10% 39%);
+        --border: hsl(205 14% 28%);
+        --border-muted: hsl(205 20% 18%);
+        --primary: hsl(204 74% 68%);
+        --secondary: hsl(27 65% 66%);
+        --danger: hsl(9 26% 64%);
+        --warning: hsl(52 19% 57%);
+        --success: hsl(146 17% 59%);
+        --info: hsl(217 28% 65%);
+    }
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    height: 100vh;
+    overflow-y: hidden;
+}
+.sidePanel {
+    border-right: 1px solid var(--border);
+    height: calc(100vh - 1px);
+    width: 18vw;
+    background-color: var(--bg);
+    display: inline-block;
+    margin-top: 1px;
+    vertical-align:top;
+}
+.sidePanel h2 {
+    color: var(--text-muted);
+    padding-left: 15px;
+    margin: 0;
+    padding-top: 15px;
+}
+.sidePanel a {
+    display: block;
+    background-color: var(--bg-light);
+    padding: 5px;
+    font-size: 20px;
+    color: var(--text);
+    padding-left: 15px;
+    text-decoration: none;
+    width: calc(90% - 20px);
+    margin-left: 5%;
+    border-radius: 5px;
+}
+.mainPanel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-block;
+    width: calc(81vw - 31px);
+    height: calc(100vh - 30px);
+    padding: 15px;
+    display: grid;
+    grid-template-rows: calc(33vh - 10px) calc(33vh - 10px) calc(33vh - 10px);
+}
+.recTile {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 10px;
+    height: calc(33vh - 30px);
+    aspect-ratio: 1;
+    background-color: var(--bg-light);
+    border-radius: 2px;
+    border: 1px solid var(--border-muted);
+    margin-bottom: 5px;
+}
+.recTile h1 {
+    margin-left: 5%;
+    margin-top: 15%;
+    height: 30%;
+    line-height: 7.5vw;
+    font-size: 4vw;
+    color: var(--text-muted);
+}
+.recTile p {
+    margin-left: 5%;
+    height: 20%;
+    font-size: 1vw;
+    color: var(--text-muted);
+}

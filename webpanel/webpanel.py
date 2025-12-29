@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from modules.stats import get_dashboard_data, delete_user_fully
 from modules.backups import create_backup, delete_backup, restore_backup, list_backups
+from modules.scheduler import start_scheduler
 
 # import threading
 import os
@@ -66,6 +67,9 @@ def restore_backup_route():
     restore_backup(filename)
     return redirect(url_for("dashboard_view"))
 
+
+if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+    start_scheduler()
 
 if __name__ == "__main__":
     app.run(debug=False, port=5050, host="0.0.0.0", threaded=True)

@@ -11,3 +11,4 @@ cryptography
 gunicorn
 psutil
 pyquery
+APScheduler==3.10.4

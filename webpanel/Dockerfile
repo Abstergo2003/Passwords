@@ -22,4 +22,4 @@ USER appuser
 
 EXPOSE 5050
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5050", "--workers", "4", "webpanel:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5050", "--workers", "1", "webpanel:app"]

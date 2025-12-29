@@ -53,6 +53,7 @@ services:
     container_name: password-vault_webpanel
     depends_on:
       - db
+      - frpc
     ports:
       - "127.0.0.1:5050:5050"
     volumes:
@@ -60,7 +61,7 @@ services:
     environment:
       SECRET_KEY: ${SECRET_KEY}
       TOKEN_TIMEDELTA: ${TOKEN_TIMEDELTA}
-      
+      BACKUP_ENCRYPTION_KEY: ${BACKUP_ENCRYPTION_KEY}
       DATABASE_DATABASE: ${DATABASE_DATABASE}
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
@@ -104,8 +105,6 @@ services:
     command: ["frpc", "-c", "/etc/frp/frpc.toml"]
     networks:
       - backend_network
-    ports:
-      - "7400:7400"
     depends_on:
       - server
       - mail

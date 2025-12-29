@@ -1,5 +1,7 @@
 import psutil
 import requests
+import json
+from pyquery import PyQuery  # type: ignore
 from modules.database import connectToDatabase
 
 
@@ -13,21 +15,20 @@ def check_inbucket_health():
         return False
 
 
-import psutil
-import requests
-
-
 def check_frp_health():
     """
     Sprawdza czy tunele FRP są aktywne, odpytując Admin UI.
     """
     try:
         # Łączymy się z kontenerem 'frpc' (zdefiniowanym w docker-compose)
-        response = requests.get("http://frpc:7400/api/health", timeout=1)
-
+        response = requests.get("http://frpc:7400/api/status", timeout=1)
         if response.status_code == 200:
-            print("ok")
-            return True
+            data = json.loads(response.text)
+            for conn in data["tcp"]:
+                if conn["status"] != "running":
+                    return False
+            else:
+                return True
     except Exception as e:
         print(f"FRP Check Error: {e}")  # Opcjonalnie do debugowania
         return False

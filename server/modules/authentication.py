@@ -69,7 +69,11 @@ def loginUser(email, password, bcrypt):
         SELECT * FROM Users WHERE email = %s
     """
     cursor.execute(sql_serach, (email,))
-    user = cursor.fetchall()[0]
+    users = cursor.fetchall()
+    if len(users) == 0:
+        return [False, None]
+
+    user = users[0]
     connection.close()
     return [bcrypt.check_password_hash(user[2], password), user[0]]
 

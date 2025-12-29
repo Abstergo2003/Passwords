@@ -25,7 +25,11 @@ def verify2fa(id, code):
         SELECT * FROM Users WHERE id = %s
     """
     cursor.execute(sql_serach, (id,))
-    user = cursor.fetchall()[0]
+    users = cursor.fetchall()
+    if len(users) == 0:
+        return False
+
+    user = users[0]
     totp = pyotp.TOTP(user[3])
     connection.close()
     return totp.verify(code)
@@ -37,7 +41,11 @@ def register2fa(id):
         SELECT * FROM Users WHERE id = %s
     """
     cursor.execute(sql_serach, (id,))
-    user = cursor.fetchall()[0]
+    users = cursor.fetchall()
+    if len(users) == 0:
+        return ""
+
+    user = users[0]
     email = user[1]
     [key, qr_base64] = generate_2fa_qrcode(email)
     sql_update = """

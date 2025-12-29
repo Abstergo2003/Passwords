@@ -93,7 +93,7 @@ def getTeasedLicenses(user_id):
 def getTeasedIdentity(user_id):
     [connection, cursor] = connectToDatabase()
     sql = """
-        SELECT p.id, p.name, p.surname, p.IDnumber, p.favourite FROM "Identity" p JOIN User_Identity pu ON p.id = pu.Identity_id WHERE pu.Users_id = %s;
+        SELECT p.id, p.name, p.surname, p.favourite FROM "Identity" p JOIN User_Identity pu ON p.id = pu.Identity_id WHERE pu.Users_id = %s;
     """
     cursor.execute(sql, (user_id,))
     items = cursor.fetchall()

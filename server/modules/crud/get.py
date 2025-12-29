@@ -20,7 +20,11 @@ def getPassword(user_id, password_id):
             AND p.id = %s;
     """
     cursor.execute(sql, (user_id, password_id))
-    item = cursor.fetchall()[0]
+    items = cursor.fetchall()
+    if len(items) == 0:
+        return {}
+
+    item = items[0]
     connection.close()
     return item
 
@@ -41,7 +45,11 @@ def getNote(user_id, note_id):
             AND p.id = %s;
     """
     cursor.execute(sql, (user_id, note_id))
-    item = cursor.fetchall()[0]
+    items = cursor.fetchall()
+    if len(items) == 0:
+        return {}
+
+    item = items[0]
     connection.close()
     return item
 
@@ -62,7 +70,11 @@ def getLicense(user_id, license_id):
             AND p.id = %s;
     """
     cursor.execute(sql, (user_id, license_id))
-    item = cursor.fetchall()[0]
+    items = cursor.fetchall()
+    if len(items) == 0:
+        return {}
+
+    item = items[0]
     connection.close()
     return item
 
@@ -74,7 +86,6 @@ def getIdentity(user_id, identity_id):
             p.id,
             p.name,
             p.surname,
-            p.IDnumber,
             p.country,
             p.state,
             p.city,
@@ -89,7 +100,11 @@ def getIdentity(user_id, identity_id):
             AND p.id = %s;
     """
     cursor.execute(sql, (user_id, identity_id))
-    item = cursor.fetchall()[0]
+    items = cursor.fetchall()
+    if len(items) == 0:
+        return {}
+
+    item = items[0]
     connection.close()
     return item
 
@@ -114,6 +129,10 @@ def getCreditCard(user_id, note_id):
             AND p.id = %s;
     """
     cursor.execute(sql, (user_id, note_id))
-    item = cursor.fetchall()[0]
+    items = cursor.fetchall()
+    if len(items) == 0:
+        return {}
+
+    item = items[0]
     connection.close()
     return item

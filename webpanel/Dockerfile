@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     gcc \
     libpq-dev \
     postgresql-client \
+    openssl \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /backups && chmod 777 /backups

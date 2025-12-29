@@ -10,3 +10,4 @@ requests
 cryptography
 gunicorn
 psutil
+pyquery

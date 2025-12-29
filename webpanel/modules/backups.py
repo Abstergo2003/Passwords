@@ -7,38 +7,38 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BACKUP_DIR = "/backups"
-
-# Pobieramy dane z ENV (te same, których używa aplikacja)
 DB_HOST = os.getenv("DATABASE_HOST", "db")
 DB_NAME = os.getenv("DATABASE_DATABASE")
 DB_USER = os.getenv("DATABASE_USER")
 DB_PASS = os.getenv("DATABASE_PASSWORD")
-BACKUP_DIR = "/backups"
+ENC_KEY = os.getenv("BACKUP_ENCRYPTION_KEY")  # Pobieramy klucz
 
 
 def create_backup():
-    """Tworzy nowy plik .sql z zrzutem bazy."""
+    print("DEBUG: Rozpoczynam tworzenie backupu...", flush=True)
+
     if not os.path.exists(BACKUP_DIR):
         try:
             os.makedirs(BACKUP_DIR, exist_ok=True)
+            print(f"DEBUG: Utworzono katalog {BACKUP_DIR}", flush=True)
         except Exception as e:
-            return (
-                False,
-                f"Permission Error: Cannot create directory {BACKUP_DIR}. {str(e)}",
-            )
-    # ------------------------------------------
+            print(f"DEBUG: Błąd tworzenia katalogu: {e}", flush=True)
+            return False, str(e)
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    filename = f"backup_{timestamp}.sql"
+    filename = f"backup_{timestamp}.sql.enc"
     filepath = os.path.join(BACKUP_DIR, filename)
 
-    # Komenda pg_dump
-    # PGPASSWORD przekazujemy jako zmienną środowiskową dla bezpieczeństwa
-    env = os.environ.copy()
-    env["PGPASSWORD"] = DB_PASS
+    print(f"DEBUG: Plik docelowy: {filepath}", flush=True)
 
-    # Flaga --clean dodaje polecenia DROP, co ułatwia przywracanie
-    cmd = [
+    env = os.environ.copy()
+    env["PGPASSWORD"] = DB_PASS or ""
+    env["ENC_KEY"] = ENC_KEY or ""
+
+    # Sprawdźmy czy zmienne są (nie wypisuj hasła!)
+    print(f"DEBUG: DB_HOST={DB_HOST}, DB_USER={DB_USER}, DB_NAME={DB_NAME}", flush=True)
+
+    dump_cmd = [
         "pg_dump",
         "-h",
         DB_HOST,
@@ -48,24 +48,71 @@ def create_backup():
         "--if-exists",
         "-d",
         DB_NAME,
-        "-f",
-        filepath,
+    ]
+
+    # Dodajemy -v (verbose) do openssl żeby widzieć czy działa
+    enc_cmd = [
+        "openssl",
+        "enc",
+        "-aes-256-cbc",
+        "-pbkdf2",
+        "-salt",
+        "-pass",
+        "env:ENC_KEY",
+        "-v",
     ]
 
     try:
-        subprocess.run(cmd, env=env, check=True)
-        return True, filename
-    except subprocess.CalledProcessError as e:
-        print(f"Backup Error: {e}")
+        with open(filepath, "wb") as outfile:
+            print("DEBUG: Uruchamiam procesy...", flush=True)
+
+            p1 = subprocess.Popen(
+                dump_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env
+            )
+            p2 = subprocess.Popen(
+                enc_cmd,
+                stdin=p1.stdout,
+                stdout=outfile,
+                stderr=subprocess.PIPE,
+                env=env,
+            )
+
+            p1.stdout.close()  # type: ignore
+
+            # Czekamy na wyniki
+            _, p2_err = p2.communicate()
+            _, p1_err = p1.communicate()
+
+            print(
+                f"DEBUG: Kody wyjścia -> pg_dump: {p1.returncode}, openssl: {p2.returncode}",
+                flush=True,
+            )
+
+            if p1.returncode != 0:
+                err = p1_err.decode("utf-8", errors="ignore")
+                print(f"!!! BŁĄD PG_DUMP !!!: {err}", flush=True)
+                # NIE USUWAMY PLIKU DLA CELÓW TESTOWYCH
+                return False, f"Dump Error: {err}"
+
+            if p2.returncode != 0:
+                err = p2_err.decode("utf-8", errors="ignore")
+                print(f"!!! BŁĄD OPENSSL !!!: {err}", flush=True)
+                return False, f"Enc Error: {err}"
+
+            # Sprawdźmy rozmiar
+            size = os.path.getsize(filepath)
+            print(f"DEBUG: Sukces! Rozmiar pliku: {size} bajtów", flush=True)
+
+            return True, filename
+
+    except Exception as e:
+        print(f"DEBUG EXCEPTION: {e}", flush=True)
         return False, str(e)
 
 
 def list_backups():
-    """Zwraca listę dostępnych plików backupu."""
-    print(f"DEBUG: Szukam w {BACKUP_DIR}")
-    print(f"DEBUG: Zawartość katalogu: {os.listdir(BACKUP_DIR)}")
-    files = glob.glob(os.path.join(BACKUP_DIR, "*.sql"))
-    # Sortujemy od najnowszych
+    # Szukamy teraz plików z końcówką .enc
+    files = glob.glob(os.path.join(BACKUP_DIR, "*.enc"))
     files.sort(key=os.path.getmtime, reverse=True)
 
     backups = []
@@ -83,39 +130,60 @@ def list_backups():
     return backups
 
 
-def delete_backup(filename):
-    """Usuwa plik backupu."""
-    # Zabezpieczenie przed Directory Traversal ("../../etc/passwd")
-    safe_name = os.path.basename(filename)
-    filepath = os.path.join(BACKUP_DIR, safe_name)
-
-    if os.path.exists(filepath):
-        os.remove(filepath)
-        return True
-    return False
-
-
 def restore_backup(filename):
     """
-    Przywraca bazę z pliku.
-    UWAGA: To nadpisze obecne dane!
+    Deszyfruje i przywraca bazę.
     """
-    safe_name = os.path.basename(filename)
-    filepath = os.path.join(BACKUP_DIR, safe_name)
+    filepath = os.path.join(BACKUP_DIR, os.path.basename(filename))
 
     if not os.path.exists(filepath):
         return False, "File not found"
 
     env = os.environ.copy()
-    env["PGPASSWORD"] = DB_PASS
+    env["PGPASSWORD"] = DB_PASS or ""
+    env["ENC_KEY"] = ENC_KEY or ""
 
-    # Używamy psql do wczytania pliku
-    # < filepath robimy otwierając plik w Pythonie
-    cmd = ["psql", "-h", DB_HOST, "-U", DB_USER, "-d", DB_NAME]
+    # 1. Komenda deszyfrowania (-d)
+    dec_cmd = [
+        "openssl",
+        "enc",
+        "-d",
+        "-aes-256-cbc",
+        "-pbkdf2",
+        "-salt",
+        "-pass",
+        "env:ENC_KEY",
+        "-in",
+        filepath,
+    ]
+
+    # 2. Komenda wczytania do bazy
+    psql_cmd = ["psql", "-h", DB_HOST, "-U", DB_USER, "-d", DB_NAME]
 
     try:
-        with open(filepath, "r") as f:
-            subprocess.run(cmd, env=env, stdin=f, check=True)
-        return True, "Success"
+        # Krok A: Deszyfrowanie (stdout idzie do psql)
+        p1 = subprocess.Popen(dec_cmd, stdout=subprocess.PIPE, env=env)
+
+        # Krok B: PSQL (czyta z p1.stdout)
+        p2 = subprocess.Popen(psql_cmd, stdin=p1.stdout, env=env)
+
+        p1.stdout.close()  # type: ignore
+        p2.communicate()
+
+        if p2.returncode == 0:
+            return True, "Success"
+        else:
+            return False, "Restore failed (Password incorrect or DB error)"
+
     except Exception as e:
         return False, str(e)
+
+
+# Funkcja delete_backup pozostaje bez zmian
+def delete_backup(filename):
+    safe_name = os.path.basename(filename)
+    filepath = os.path.join(BACKUP_DIR, safe_name)
+    if os.path.exists(filepath):
+        os.remove(filepath)
+        return True
+    return False

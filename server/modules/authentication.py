@@ -4,6 +4,7 @@ import os
 import jwt
 import uuid
 import geoip2.database
+from flask_bcrypt import Bcrypt
 
 # modules
 from modules.database import connectToDatabase
@@ -16,7 +17,7 @@ TOKEN_TIMEDELTA = int(os.getenv("TOKEN_TIMEDELTA", 30))
 GEOIP_DB_PATH = "/geoip/GeoLite2-Country.mmdb"
 
 
-def get_ip_location(ip_address):
+def get_ip_location(ip_address: str) -> str:
     """
     Zwraca kraj na podstawie IP używając lokalnej bazy MaxMind.
     Czas wykonania: < 1ms.
@@ -40,7 +41,7 @@ def get_ip_location(ip_address):
                 return country_name
             return "Unknown"
 
-    except geoip2.errors.AddressNotFoundError:  # type: ignore
+    except geoip2.errors.AddressNotFoundError:
         # IP nie ma w bazie (np. nowe IP lub lokalne)
         return "Unknown"
     except Exception as e:
@@ -48,7 +49,7 @@ def get_ip_location(ip_address):
         return "Unknown"
 
 
-def generate_jwt(user_id, remote_addr):
+def generate_jwt(user_id: str, remote_addr: str) -> str:
     payload = {
         "id": user_id,
         "exp": datetime.datetime.now(datetime.timezone.utc)
@@ -58,7 +59,7 @@ def generate_jwt(user_id, remote_addr):
     return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
 
-def verify_jwt(token, remote_addr):
+def verify_jwt(token: str, remote_addr: str) -> str | None:
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
         if get_ip_location(remote_addr) == payload.get("cnt"):
@@ -69,7 +70,7 @@ def verify_jwt(token, remote_addr):
         return None
 
 
-def registerUser(email, auth_hash, salt, bcrypt):
+def registerUser(email: str, auth_hash: str, salt: str, bcrypt: Bcrypt) -> str:
     [connection, cursor] = connectToDatabase()
     user_id = str(uuid.uuid4())
 
@@ -87,7 +88,7 @@ def registerUser(email, auth_hash, salt, bcrypt):
     return user_id
 
 
-def getSalt(email):
+def getSalt(email: str) -> str | None:
     [connection, cursor] = connectToDatabase()
     # Note: Use '=' for SQL comparison, not '=='
     sql_search = "SELECT encryption_salt FROM Users WHERE email = %s"
@@ -100,7 +101,7 @@ def getSalt(email):
     return None
 
 
-def loginUser(email, password, bcrypt):
+def loginUser(email: str, password: str, bcrypt: Bcrypt) -> tuple[bool, str | None]:
     [connection, cursor] = connectToDatabase()
     sql_serach = """
         SELECT * FROM Users WHERE email = %s
@@ -108,14 +109,14 @@ def loginUser(email, password, bcrypt):
     cursor.execute(sql_serach, (email,))
     users = cursor.fetchall()
     if len(users) == 0:
-        return [False, None]
+        return (False, None)
 
     user = users[0]
     connection.close()
-    return [bcrypt.check_password_hash(user[2], password), user[0]]
+    return (bcrypt.check_password_hash(user[2], password), user[0])
 
 
-def checkEmailFree(email):
+def checkEmailFree(email: str) -> bool:
     [connection, cursor] = connectToDatabase()
     sql_serach = """
         SELECT * FROM Users WHERE email = %s

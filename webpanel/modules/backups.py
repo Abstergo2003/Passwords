@@ -14,7 +14,7 @@ DB_PASS = os.getenv("DATABASE_PASSWORD")
 ENC_KEY = os.getenv("BACKUP_ENCRYPTION_KEY")  # Pobieramy klucz
 
 
-def create_backup():
+def create_backup() -> tuple[bool, str]:
     print("DEBUG: Rozpoczynam tworzenie backupu...", flush=True)
 
     if not os.path.exists(BACKUP_DIR):
@@ -77,7 +77,7 @@ def create_backup():
                 env=env,
             )
 
-            p1.stdout.close()  # type: ignore
+            p1.stdout.close()
 
             # Czekamy na wyniki
             _, p2_err = p2.communicate()
@@ -110,7 +110,7 @@ def create_backup():
         return False, str(e)
 
 
-def list_backups():
+def list_backups() -> list:
     # Szukamy teraz plików z końcówką .enc
     files = glob.glob(os.path.join(BACKUP_DIR, "*.enc"))
     files.sort(key=os.path.getmtime, reverse=True)
@@ -130,7 +130,7 @@ def list_backups():
     return backups
 
 
-def restore_backup(filename):
+def restore_backup(filename) -> tuple[bool, str]:
     """
     Deszyfruje i przywraca bazę.
     """
@@ -167,7 +167,7 @@ def restore_backup(filename):
         # Krok B: PSQL (czyta z p1.stdout)
         p2 = subprocess.Popen(psql_cmd, stdin=p1.stdout, env=env)
 
-        p1.stdout.close()  # type: ignore
+        p1.stdout.close()
         p2.communicate()
 
         if p2.returncode == 0:
@@ -180,7 +180,7 @@ def restore_backup(filename):
 
 
 # Funkcja delete_backup pozostaje bez zmian
-def delete_backup(filename):
+def delete_backup(filename) -> bool:
     safe_name = os.path.basename(filename)
     filepath = os.path.join(BACKUP_DIR, safe_name)
     if os.path.exists(filepath):

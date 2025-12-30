@@ -2,9 +2,6 @@ import psycopg2
 from dotenv import load_dotenv
 import os
 
-# modules
-from modules.tools import obfuscateString
-
 load_dotenv()
 
 
@@ -28,7 +25,7 @@ def connectToDatabase():
     return [connection, cursor]
 
 
-def getTeasedPasswords(user_id):
+def getTeasedPasswords(user_id: str) -> list:
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT p.id, p.login, p.domain, p.favourite FROM Password p JOIN  Password_User pu ON p.id = pu.Password_id WHERE pu.Users_id = %s;
@@ -49,7 +46,7 @@ def getTeasedPasswords(user_id):
     return teased
 
 
-def getTeasedNotes(user_id):
+def getTeasedNotes(user_id: str) -> list:
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT p.id, p.name, p.content, p.favourite FROM Notes p JOIN  User_Notes pu ON p.id = pu.Notes_id WHERE pu.Users_id = %s;
@@ -70,7 +67,7 @@ def getTeasedNotes(user_id):
     return teased
 
 
-def getTeasedLicenses(user_id):
+def getTeasedLicenses(user_id: str) -> list:
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT p.id, p.name, p.diverse, p.favourite FROM License p JOIN  User_License pu ON p.id = pu.License_id WHERE pu.Users_id = %s;
@@ -91,7 +88,7 @@ def getTeasedLicenses(user_id):
     return teased
 
 
-def getTeasedIdentity(user_id):
+def getTeasedIdentity(user_id: str) -> list:
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT p.id, p.name, p.surname, p.favourite FROM "Identity" p JOIN User_Identity pu ON p.id = pu.Identity_id WHERE pu.Users_id = %s;
@@ -112,7 +109,7 @@ def getTeasedIdentity(user_id):
     return teased
 
 
-def getTeasedCreditCard(user_id):
+def getTeasedCreditCard(user_id: str) -> list:
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT p.id, p.bankName, p.number, p.favourite FROM CreditCard p JOIN  User_CreditCard pu ON p.id = pu.CreditCard_id WHERE pu.Users_id = %s;
@@ -133,7 +130,7 @@ def getTeasedCreditCard(user_id):
     return teased
 
 
-def getTeasedItems(user_id):
+def getTeasedItems(user_id: str) -> dict:
     passwords = getTeasedPasswords(user_id)
     notes = getTeasedNotes(user_id)
     licenses = getTeasedLicenses(user_id)

@@ -1,7 +1,7 @@
 from modules.database import connectToDatabase
 
 
-def getPassword(user_id, password_id):
+def getPassword(user_id: str, password_id: str) -> dict:
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT 
@@ -29,7 +29,7 @@ def getPassword(user_id, password_id):
     return item
 
 
-def getNote(user_id, note_id):
+def getNote(user_id: str, note_id: str) -> dict:
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT 
@@ -54,7 +54,7 @@ def getNote(user_id, note_id):
     return item
 
 
-def getLicense(user_id, license_id):
+def getLicense(user_id: str, license_id: str) -> dict:
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT 
@@ -79,7 +79,7 @@ def getLicense(user_id, license_id):
     return item
 
 
-def getIdentity(user_id, identity_id):
+def getIdentity(user_id: str, identity_id: str) -> dict:
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT 
@@ -109,7 +109,7 @@ def getIdentity(user_id, identity_id):
     return item
 
 
-def getCreditCard(user_id, note_id):
+def getCreditCard(user_id: str, note_id: str) -> dict:
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT 

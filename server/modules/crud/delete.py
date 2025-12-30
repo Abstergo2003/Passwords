@@ -1,7 +1,7 @@
 from modules.database import connectToDatabase
 
 
-def deletePassword(user_id, password_id):
+def deletePassword(user_id: str, password_id: str) -> bool:
     [connection, cursor] = connectToDatabase()
     sql = """
     WITH deleted_relationship AS (
@@ -22,7 +22,7 @@ def deletePassword(user_id, password_id):
     return True
 
 
-def deleteNote(user_id, note_id):
+def deleteNote(user_id: str, note_id: str) -> bool:
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -42,7 +42,7 @@ def deleteNote(user_id, note_id):
     return True
 
 
-def deleteIdentity(user_id, identity_id):
+def deleteIdentity(user_id: str, identity_id: str) -> bool:
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -62,7 +62,7 @@ def deleteIdentity(user_id, identity_id):
     return True
 
 
-def deleteCreditCard(user_id, card_id):
+def deleteCreditCard(user_id: str, card_id: str) -> bool:
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -82,7 +82,7 @@ def deleteCreditCard(user_id, card_id):
     return True
 
 
-def deleteLicense(user_id, license_id):
+def deleteLicense(user_id: str, license_id: str) -> bool:
     [connection, cursor] = connectToDatabase()
 
     sql = """

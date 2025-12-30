@@ -23,12 +23,12 @@ delete_routes = Blueprint("delete", __name__)
 
 @delete_routes.route("/deletePassword", methods=["DELETE"])
 def deletePasswordRoute():
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
-    password_id = request.cookies.get("id")  # type: ignore
+    password_id = request.cookies.get("id") or ""
     is_id_valid = validate_uuid4(password_id)
     if not is_id_valid:
         return make_response({"error": "invalid id"}, 400)
@@ -42,12 +42,12 @@ def deletePasswordRoute():
 
 @delete_routes.route("/deleteNote", methods=["DELETE"])
 def deleteNoteRoute():
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
-    note_id = request.cookies.get("id")  # type: ignore
+    note_id = request.cookies.get("id") or ""
 
     is_id_valid = validate_uuid4(note_id)
     if not is_id_valid:
@@ -62,12 +62,12 @@ def deleteNoteRoute():
 
 @delete_routes.route("/deleteCreditCard", methods=["DELETE"])
 def deleteCreditCardRoute():
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
-    card_id = request.cookies.get("id")  # type: ignore
+    card_id = request.cookies.get("id") or ""
 
     is_id_valid = validate_uuid4(card_id)
     if not is_id_valid:
@@ -82,12 +82,12 @@ def deleteCreditCardRoute():
 
 @delete_routes.route("/deleteIdentity", methods=["DELETE"])
 def deleteIdentityRoute():
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
-    identity_id = request.cookies.get("id")  # type: ignore
+    identity_id = request.cookies.get("id") or ""
 
     is_id_valid = validate_uuid4(identity_id)
     if not is_id_valid:
@@ -102,12 +102,12 @@ def deleteIdentityRoute():
 
 @delete_routes.route("/deleteLicense", methods=["DELETE"])
 def deleteLicenseRoute():
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
-    license_id = request.cookies.get("id")  # type: ignore
+    license_id = request.cookies.get("id") or ""
 
     is_id_valid = validate_uuid4(license_id)
     if not is_id_valid:

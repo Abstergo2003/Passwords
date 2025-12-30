@@ -52,9 +52,9 @@ if ALLOW_REGISTER == "1":
 
         data = request.json
 
-        email = data.get("email")  # type: ignore
-        auth_hash = data.get("auth_hash")  # type: ignore # Client sends SHA256(password)
-        salt = data.get("salt")  # type: ignore # Client generates and sends this random string
+        email = data.get("email")
+        auth_hash = data.get("auth_hash")  # Client sends SHA256(password)
+        salt = data.get("salt")  # Client generates and sends this random string
 
         if not checkEmailFree(email):
             return make_response({"status": "Email already in use"}, 200)
@@ -64,7 +64,7 @@ if ALLOW_REGISTER == "1":
         qr_base64 = register2fa(user_id)
 
         resp = make_response({"status": "ok"})
-        token = generate_jwt(user_id, request.remote_addr)
+        token = generate_jwt(user_id, request.remote_addr or "")
         resp.set_cookie("token", token, httponly=True, samesite="Lax")
         resp.set_cookie("qr_code", qr_base64)
         return resp
@@ -74,15 +74,15 @@ if ALLOW_REGISTER == "1":
 def login_route():
     # Use JSON body
     data = request.json
-    email = data.get("email")  # type: ignore
-    auth_hash = data.get("auth_hash")  # type: ignore # Client sends SHA256(password)
-    code = data.get("code")  # type: ignore
+    email = data.get("email")
+    auth_hash = data.get("auth_hash")  # Client sends SHA256(password)
+    code = data.get("code")
 
     # loginUser verifies Bcrypt(auth_hash) matches DB
     [result, user_id] = loginUser(email, auth_hash, bcrypt)
-    ver_result = verify2fa(user_id, code)
+    ver_result = verify2fa(user_id or "", code)
     if result and ver_result:
-        token = generate_jwt(user_id, request.remote_addr)
+        token = generate_jwt(user_id or "", request.remote_addr or "")
         response = make_response({"status": "ok"}, 200)
         response.set_cookie("token", token, httponly=True, samesite="Lax")
         return response

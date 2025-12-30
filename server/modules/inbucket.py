@@ -6,7 +6,7 @@ from modules.database import connectToDatabase
 INBUCKET_API = "http://mail:9000/api/v1/mailbox"
 
 
-def addMailbox(user_id, mailbox_name):
+def addMailbox(user_id: str, mailbox_name: str) -> bool:
     """Zapisuje nową skrzynkę przypisaną do użytkownika."""
     [connection, cursor] = connectToDatabase()
     mailbox_id = str(uuid.uuid4())
@@ -22,7 +22,7 @@ def addMailbox(user_id, mailbox_name):
         connection.close()
 
 
-def getUserMailboxes(user_id):
+def getUserMailboxes(user_id: str) -> list:
     """Pobiera listę wszystkich skrzynek należących do użytkownika."""
     [connection, cursor] = connectToDatabase()
     sql = "SELECT mail FROM Users_mail WHERE Users_id = %s;"
@@ -32,7 +32,7 @@ def getUserMailboxes(user_id):
     return [row[0] for row in rows]
 
 
-def checkMailboxOwnership(user_id, mailbox_name):
+def checkMailboxOwnership(user_id: str, mailbox_name: str) -> bool:
     """Sprawdza, czy dana skrzynka należy do użytkownika."""
     [connection, cursor] = connectToDatabase()
     sql = "SELECT 1 FROM Users_mail WHERE Users_id = %s AND mail = %s;"
@@ -42,7 +42,7 @@ def checkMailboxOwnership(user_id, mailbox_name):
     return exists
 
 
-def deleteMailbox(user_id, mailbox_name):
+def deleteMailbox(user_id: str, mailbox_name: str) -> bool:
     """Usuwa skrzynkę z bazy danych i czyści ją fizycznie w Inbucket."""
     [connection, cursor] = connectToDatabase()
     sql = "DELETE FROM Users_mail WHERE Users_id = %s AND mail = %s;"

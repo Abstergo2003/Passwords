@@ -47,26 +47,26 @@ app.register_blueprint(get_routes)
 app.register_blueprint(delete_routes)
 
 
-@app.route("/debug-ip")
-def debug_ip():
-    # 1. To powinno być Prawdziwe IP (dzięki ProxyFix)
-    ip_flask = request.remote_addr
+# @app.route("/debug-ip")
+# def debug_ip():
+#     # 1. To powinno być Prawdziwe IP (dzięki ProxyFix)
+#     ip_flask = request.remote_addr
 
-    # 2. To jest surowy nagłówek, który przysłał Nginx
-    ip_header = request.headers.get("X-Forwarded-For", "Brak nagłówka")
+#     # 2. To jest surowy nagłówek, który przysłał Nginx
+#     ip_header = request.headers.get("X-Forwarded-For", "Brak nagłówka")
 
-    # 3. Pełna lista nagłówków (do głębokiej analizy)
-    headers = dict(request.headers)
+#     # 3. Pełna lista nagłówków (do głębokiej analizy)
+#     headers = dict(request.headers)
 
-    # Wypisujemy do logów konsoli (z flush=True dla Dockera)
-    print(f"--- DEBUG IP ---", flush=True)
-    print(f"Remote Addr (Flask): {ip_flask}", flush=True)
-    print(f"X-Forwarded-For:     {ip_header}", flush=True)
-    print(f"----------------", flush=True)
+#     # Wypisujemy do logów konsoli (z flush=True dla Dockera)
+#     print(f"--- DEBUG IP ---", flush=True)
+#     print(f"Remote Addr (Flask): {ip_flask}", flush=True)
+#     print(f"X-Forwarded-For:     {ip_header}", flush=True)
+#     print(f"----------------", flush=True)
 
-    return jsonify(
-        {"ip_flask_sees": ip_flask, "raw_header": ip_header, "all_headers": headers}
-    )
+#     return jsonify(
+#         {"ip_flask_sees": ip_flask, "raw_header": ip_header, "all_headers": headers}
+#     )
 
 
 if ENABLE_BURNER_MAIL_SERVICE == "1":

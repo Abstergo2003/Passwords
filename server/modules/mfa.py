@@ -7,7 +7,7 @@ import base64
 from modules.database import connectToDatabase
 
 
-def generate_2fa_qrcode(email):
+def generate_2fa_qrcode(email: str) -> list[str]:
     key = pyotp.random_base32()
     uri = pyotp.totp.TOTP(key).provisioning_uri(
         name=email, issuer_name="Passwords## by Abstergo##"
@@ -19,7 +19,7 @@ def generate_2fa_qrcode(email):
     return [key, qr_base64]
 
 
-def verify2fa(id, code):
+def verify2fa(id: str, code: str) -> bool:
     [connection, cursor] = connectToDatabase()
     sql_serach = """
         SELECT * FROM Users WHERE id = %s
@@ -35,7 +35,7 @@ def verify2fa(id, code):
     return totp.verify(code)
 
 
-def register2fa(id):
+def register2fa(id: str) -> str:
     [connection, cursor] = connectToDatabase()
     sql_serach = """
         SELECT * FROM Users WHERE id = %s

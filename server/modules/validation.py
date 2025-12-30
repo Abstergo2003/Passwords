@@ -13,7 +13,7 @@ USER_EDITABLE_TABLES = [
 
 
 # --- Base Validation Function ---
-def validate_payload(data, schema):
+def validate_payload(data: dict, schema: dict) -> tuple[bool, str | None]:
     """
     Validates data against the schema.
     Returns (True, None) if valid.
@@ -38,7 +38,6 @@ password_schema = {
         "password": {"type": "string"},
         "domain": {"type": "string"},
         "tfa": {"type": "string"},
-        "favourite": {"type": "boolean"},
     },
     "required": ["email", "login", "password", "domain", "tfa"],
     "additionalProperties": False,  # Security: Rejects unknown fields
@@ -50,7 +49,6 @@ note_schema = {
     "properties": {
         "name": {"type": "string"},
         "content": {"type": "string"},
-        "favourite": {"type": "boolean"},
     },
     "required": ["name", "content"],
     "additionalProperties": False,
@@ -66,7 +64,6 @@ credit_card_schema = {
         "cvv": {"type": "string"},
         "owner": {"type": "string"},
         "exp_date": {"type": "string"},  # Mapping JSON 'exp_date' -> DB 'expDate'
-        "favourite": {"type": "boolean"},
     },
     "required": ["bankName", "number", "brand", "cvv", "owner", "exp_date"],
     "additionalProperties": False,
@@ -83,7 +80,6 @@ identity_schema = {
         "city": {"type": "string"},
         "street": {"type": "string"},
         "number": {"type": "string"},
-        "favourite": {"type": "boolean"},
     },
     "required": [
         "name",
@@ -104,14 +100,13 @@ license_schema = {
         "name": {"type": "string"},
         # 'diverse' is JSONB in DB, so we accept object OR string here
         "diverse": {"type": ["object", "string"]},
-        "favourite": {"type": "boolean"},
     },
     "required": ["name", "diverse"],
     "additionalProperties": False,
 }
 
 
-def validate_uuid4(uuid_string):
+def validate_uuid4(uuid_string: str) -> bool:
     """
     Returns True if uuid_string is a valid version 4 UUID.
     """

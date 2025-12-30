@@ -2,7 +2,7 @@ from modules.database import connectToDatabase
 import uuid
 
 
-def addPassword(user_id, data):
+def addPassword(user_id: str, data: dict) -> bool:
     [connection, cursor] = connectToDatabase()
     sql = """
     WITH new_password_entry AS (
@@ -40,7 +40,7 @@ def addPassword(user_id, data):
     return True
 
 
-def addNote(user_id, name, content):
+def addNote(user_id: str, data: dict) -> bool:
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -58,7 +58,13 @@ def addNote(user_id, name, content):
     FROM new_entry;
     """
 
-    params = (str(uuid.uuid4()), name, content, False, user_id)
+    params = (
+        str(uuid.uuid4()),
+        data.get("name", ""),
+        data.get("content", ""),
+        False,
+        user_id,
+    )
 
     cursor.execute(sql, params)
     connection.commit()
@@ -66,7 +72,7 @@ def addNote(user_id, name, content):
     return True
 
 
-def addIdentity(user_id, name, surname, country, state, city, street, number):
+def addIdentity(user_id: str, data: dict) -> bool:
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -86,13 +92,13 @@ def addIdentity(user_id, name, surname, country, state, city, street, number):
 
     params = (
         str(uuid.uuid4()),
-        name,
-        surname,
-        country,
-        state,
-        city,
-        street,
-        number,
+        data.get("name", ""),
+        data.get("surname", ""),
+        data.get("country", ""),
+        data.get("state", ""),
+        data.get("city", ""),
+        data.get("street", ""),
+        data.get("number", ""),
         False,
         user_id,
     )
@@ -103,7 +109,7 @@ def addIdentity(user_id, name, surname, country, state, city, street, number):
     return True
 
 
-def addCreditCard(user_id, bank_name, number, brand, cvv, owner, exp_date, favourite):
+def addCreditCard(user_id: str, data: dict) -> bool:
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -123,13 +129,13 @@ def addCreditCard(user_id, bank_name, number, brand, cvv, owner, exp_date, favou
 
     params = (
         str(uuid.uuid4()),
-        bank_name,
-        number,
-        brand,
-        cvv,
-        owner,
-        exp_date,
-        favourite,
+        data.get("bankName", ""),
+        data.get("number", ""),
+        data.get("brand", ""),
+        data.get("cvv", ""),
+        data.get("owner", ""),
+        data.get("exp_date", ""),
+        False,
         user_id,
     )
 
@@ -139,7 +145,7 @@ def addCreditCard(user_id, bank_name, number, brand, cvv, owner, exp_date, favou
     return True
 
 
-def addLicense(user_id, name, diverse_json_data):
+def addLicense(user_id: str, data: dict) -> bool:
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -159,8 +165,8 @@ def addLicense(user_id, name, diverse_json_data):
 
     params = (
         str(uuid.uuid4()),
-        name,
-        diverse_json_data,  # This must be a JSON string or dict for the driver
+        data.get("name", ""),
+        data.get("diverse", ""),  # This must be a JSON string or dict for the driver
         False,
         user_id,
     )

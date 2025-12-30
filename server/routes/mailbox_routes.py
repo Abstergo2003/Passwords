@@ -26,8 +26,8 @@ mailbox_routes = Blueprint("mailbox", __name__)
 
 @mailbox_routes.route("/generate-mailbox", methods=["POST"])
 def generate_mailbox_route():
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
@@ -46,8 +46,8 @@ def generate_mailbox_route():
 
 @mailbox_routes.route("/mailbox", methods=["GET"])
 def list_mailboxes_route():
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
@@ -57,12 +57,12 @@ def list_mailboxes_route():
 
 @mailbox_routes.route("/get-messages", methods=["GET"])
 def get_messages_route(mailbox_name):
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
-    mailbox_name = request.cookies.get("mailbox_name")
+    mailbox_name = request.cookies.get("mailbox_name") or ""
 
     # ZABEZPIECZENIE: Sprawdzenie własności
     if not checkMailboxOwnership(user_id, mailbox_name):
@@ -77,13 +77,13 @@ def get_messages_route(mailbox_name):
 
 @mailbox_routes.route("/get-message", methods=["GET"])
 def get_single_message_route():
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
-    mailbox_name = request.cookies.get("mailbox_name")
-    message_id = request.cookies.get("message_id")
+    mailbox_name = request.cookies.get("mailbox_name") or ""
+    message_id = request.cookies.get("message_id") or ""
 
     if not checkMailboxOwnership(user_id, mailbox_name):
         return generateUnauthorized()
@@ -97,12 +97,12 @@ def get_single_message_route():
 
 @mailbox_routes.route("/delete-mailbox", methods=["DELETE"])
 def delete_mailbox_api_route():
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
-    mailbox_name = request.cookies.get("mailbox_name")
+    mailbox_name = request.cookies.get("mailbox_name") or ""
 
     if not checkMailboxOwnership(user_id, mailbox_name):
         return generateUnauthorized()

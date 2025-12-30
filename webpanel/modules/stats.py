@@ -5,7 +5,7 @@ from pyquery import PyQuery  # type: ignore
 from modules.database import connectToDatabase
 
 
-def check_inbucket_health():
+def check_inbucket_health() -> bool:
     """Sprawdza czy kontener mailowy żyje"""
     try:
         # Wewnątrz sieci Dockerowej łączymy się po nazwie serwisu 'mail'
@@ -15,7 +15,7 @@ def check_inbucket_health():
         return False
 
 
-def check_frp_health():
+def check_frp_health() -> bool | None:
     """
     Sprawdza czy tunele FRP są aktywne, odpytując Admin UI.
     """
@@ -35,7 +35,7 @@ def check_frp_health():
 
 
 # --- STATYSTYKI ---
-def get_dashboard_data():
+def get_dashboard_data() -> dict:
     data = {}
 
     # --- 1. HEALTHCHECK (INFRASTRUKTURA) ---
@@ -128,7 +128,7 @@ def get_dashboard_data():
 
 
 # --- ZARZĄDZANIE (DELETE) ---
-def delete_user_fully(user_id_to_delete):
+def delete_user_fully(user_id_to_delete: str) -> bool:
     """
     Usuwa użytkownika i kaskadowo wszystkie jego dane.
     Musi usunąć wpisy z tabel łącznikowych ORAZ właściwych tabel z danymi.

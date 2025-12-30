@@ -28,12 +28,12 @@ add_routes = Blueprint("add", __name__)
 
 @add_routes.route("/addPassword", methods=["POST"])
 def addPasswordRoute():
-    token = request.cookies.get("token")
-    user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
-    data = request.json
+    data = request.json or {}
 
     is_valid, error_msg = validate_payload(data, password_schema)
 
@@ -42,7 +42,7 @@ def addPasswordRoute():
 
     # 2. Execute
     # Fixed typo: 'addPasssword' -> 'addPassword'
-    result = addPassword(user_id, data)  # Default to False if missing # type: ignore
+    result = addPassword(user_id, data)  # Default to False if missing
 
     if result:
         return make_response({"status": "ok"}, 200)
@@ -52,12 +52,12 @@ def addPasswordRoute():
 
 @add_routes.route("/addNote", methods=["POST"])
 def addNoteRoute():
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
-    data = request.json
+    data = request.json or {}
 
     # 1. Validate
     is_valid, error_msg = validate_payload(data, note_schema)
@@ -65,7 +65,7 @@ def addNoteRoute():
         return make_response({"error": error_msg}, 400)
 
     # 2. Execute
-    result = addNote(user_id, data["name"], data["content"])  # type: ignore
+    result = addNote(user_id, data)
 
     if result:
         return make_response({"status": "ok"}, 200)
@@ -75,12 +75,12 @@ def addNoteRoute():
 
 @add_routes.route("/addCreditCard", methods=["POST"])
 def addCreditCardRoute():
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
-    data = request.json
+    data = request.json or {}
 
     is_valid, error_msg = validate_payload(data, credit_card_schema)
 
@@ -88,16 +88,7 @@ def addCreditCardRoute():
         return make_response({"error": error_msg}, 400)
 
     # 2. Execute
-    result = addCreditCard(
-        user_id,
-        data["bankName"],  # type: ignore
-        data["number"],  # type: ignore
-        data["brand"],  # type: ignore
-        data["cvv"],  # type: ignore
-        data["owner"],  # type: ignore
-        data["exp_date"],  # type: ignore
-        data.get("favourite", False),  # type: ignore
-    )
+    result = addCreditCard(user_id, data)
 
     if result:
         return make_response({"status": "ok"}, 200)
@@ -107,12 +98,12 @@ def addCreditCardRoute():
 
 @add_routes.route("/addIdentity", methods=["POST"])
 def addIdentityRoute():
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
-    data = request.json
+    data = request.json or {}
 
     is_valid, error_msg = validate_payload(data, identity_schema)
 
@@ -120,16 +111,7 @@ def addIdentityRoute():
         return make_response({"error": error_msg}, 400)
 
     # 2. Execute
-    result = addIdentity(
-        user_id,
-        data["name"],  # type: ignore
-        data["surname"],  # type: ignore
-        data["country"],  # type: ignore
-        data["state"],  # type: ignore
-        data["city"],  # type: ignore
-        data["street"],  # type: ignore
-        data["number"],  # type: ignore
-    )
+    result = addIdentity(user_id, data)
 
     if result:
         return make_response({"status": "ok"}, 200)
@@ -139,12 +121,12 @@ def addIdentityRoute():
 
 @add_routes.route("/addLicense", methods=["POST"])
 def addLicenseRoute():
-    token = request.cookies.get("token")
-    user_id = user_id = verify_jwt(token, request.remote_addr)
+    token = request.cookies.get("token") or ""
+    user_id = user_id = verify_jwt(token, request.remote_addr or "")
     if user_id is None:
         return generateUnauthorized()
 
-    data = request.json
+    data = request.json or {}
 
     # 1. Validate
     # 'diverse' should be a JSON object or string, validation just checks presence here
@@ -154,7 +136,7 @@ def addLicenseRoute():
         return make_response({"error": error_msg}, 400)
 
     # 2. Execute
-    result = addLicense(user_id, data["name"], data["diverse"])  # type: ignore
+    result = addLicense(user_id, data)
 
     if result:
         return make_response({"status": "ok"}, 200)

@@ -29,7 +29,7 @@ add_routes = Blueprint("add", __name__)
 @add_routes.route("/addPassword", methods=["POST"])
 def addPasswordRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -53,7 +53,7 @@ def addPasswordRoute():
 @add_routes.route("/addNote", methods=["POST"])
 def addNoteRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -76,7 +76,7 @@ def addNoteRoute():
 @add_routes.route("/addCreditCard", methods=["POST"])
 def addCreditCardRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -108,7 +108,7 @@ def addCreditCardRoute():
 @add_routes.route("/addIdentity", methods=["POST"])
 def addIdentityRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -140,7 +140,7 @@ def addIdentityRoute():
 @add_routes.route("/addLicense", methods=["POST"])
 def addLicenseRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 

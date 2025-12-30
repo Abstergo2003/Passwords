@@ -5,6 +5,7 @@ from modules.scheduler import start_scheduler
 
 # import threading
 import os
+from modules.geoip_utils import get_geoip_status, update_geoip_database
 
 # ENV Variables
 from dotenv import load_dotenv
@@ -26,7 +27,27 @@ def dashboard_view():
 
     stats = get_dashboard_data()
     backups = list_backups()
-    return render_template("dashboard.html", stats=stats, backups=backups)
+    geoip_info = get_geoip_status()
+    return render_template(
+        "dashboard.html",
+        stats=stats,
+        backups=backups,
+        geoip=geoip_info,
+    )
+
+
+@app.route("/dashboard/update-geoip", methods=["POST"])
+def update_geoip_route():
+    # Sprawdzenie sesji admina... (jeśli masz dekorator login_required)
+
+    success, message = update_geoip_database()
+
+    if success:
+        print(message, "success")
+    else:
+        print(f"Błąd aktualizacji: {message}", "danger")
+
+    return redirect(url_for("dashboard_view"))
 
 
 @app.route("/dashboard/delete_user", methods=["POST"])

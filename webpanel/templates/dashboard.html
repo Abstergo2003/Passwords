@@ -238,6 +238,38 @@
         </table>
     </div>
 
+    <div class="card" style="margin-top: 20px; border-left: 5px solid #17a2b8;">
+    <div class="card-header">
+        <h3>🌍 GeoIP Database</h3>
+    </div>
+    <div class="card-body">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <p><strong>Status:</strong> 
+                    {% if geoip.exists %}
+                        <span style="color: green;">✔ Aktywna</span>
+                    {% else %}
+                        <span style="color: red;">❌ Brak pliku</span>
+                    {% endif %}
+                </p>
+                <p><strong>Ostatnia aktualizacja:</strong> {{ geoip.last_modified }}</p>
+                {% if geoip.exists %}
+                <p><strong>Rozmiar:</strong> {{ geoip.size_mb }} MB</p>
+                {% endif %}
+            </div>
+            
+            <form action="{{ url_for('admin.update_geoip_route') }}" method="POST">
+                <button type="submit" class="btn" style="background-color: #17a2b8; color: white;" onclick="return confirm('To może chwilę potrwać. Czy chcesz pobrać najnowszą bazę MaxMind?')">
+                    🔄 Aktualizuj Bazę
+                </button>
+            </form>
+        </div>
+        <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">
+            Baza dostarczana przez MaxMind (GeoLite2). Aktualizuj raz w miesiącu, aby poprawnie wykrywać kraje logowania.
+        </p>
+    </div>
+</div>
+
     <h2 style="color: var(--text-main); font-size: 1.2rem; margin-bottom: 15px;">User Management</h2>
     <input type="text" id="emailSearchInput" placeholder="Zacznij wpisywać email, aby filtrować...">
     <div class="table-container">

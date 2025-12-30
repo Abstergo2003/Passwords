@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 import jwt
 import uuid
-
+import geoip2.database
 
 # modules
 from modules.database import connectToDatabase
@@ -13,21 +13,58 @@ load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY", "wad798!@wfttu89#lol")
 TOKEN_TIMEDELTA = int(os.getenv("TOKEN_TIMEDELTA", 30))
+GEOIP_DB_PATH = "/geoip/GeoLite2-Country.mmdb"
 
 
-def generate_jwt(user_id):
+def get_ip_location(ip_address):
+    """
+    Zwraca kraj na podstawie IP używając lokalnej bazy MaxMind.
+    Czas wykonania: < 1ms.
+    """
+    # 1. Ignoruj sieci lokalne (Docker, LAN)
+    if ip_address.startswith(("127.", "10.", "172.", "192.168.")):
+        return "Local Network"
+
+    # 2. Sprawdź czy baza istnieje
+    if not os.path.exists(GEOIP_DB_PATH):
+        print("ERROR: GeoIP database file not found!", flush=True)
+        return "Unknown"
+
+    try:
+        # 3. Odczyt z pliku
+        with geoip2.database.Reader(GEOIP_DB_PATH) as reader:
+            response = reader.country(ip_address)
+            country_name = response.country.name
+
+            if country_name:
+                return country_name
+            return "Unknown"
+
+    except geoip2.errors.AddressNotFoundError:  # type: ignore
+        # IP nie ma w bazie (np. nowe IP lub lokalne)
+        return "Unknown"
+    except Exception as e:
+        print(f"GeoIP Error: {e}", flush=True)
+        return "Unknown"
+
+
+def generate_jwt(user_id, remote_addr):
     payload = {
         "id": user_id,
         "exp": datetime.datetime.now(datetime.timezone.utc)
         + datetime.timedelta(days=TOKEN_TIMEDELTA),
+        "cnt": get_ip_location(remote_addr),
     }
     return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
 
-def verify_jwt(token):
+def verify_jwt(token, remote_addr):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-        return payload["id"]
+        if get_ip_location(remote_addr) == payload.get("cnt"):
+            return payload["id"]
+        else:
+            return None
     except (jwt.ExpiredSignatureError, jwt.InvalidTokenError):
         return None
 

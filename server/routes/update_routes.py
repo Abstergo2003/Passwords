@@ -26,7 +26,7 @@ update_routes = Blueprint("update", __name__)
 @update_routes.route("/updatePassword", methods=["PUT"])
 def updatePasswordRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -60,7 +60,7 @@ def updatePasswordRoute():
 @update_routes.route("/updateNote", methods=["PUT"])
 def updateNoteRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -85,7 +85,7 @@ def updateNoteRoute():
 @update_routes.route("/updateCreditCard", methods=["PUT"])
 def updateCreditCardRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -120,7 +120,7 @@ def updateCreditCardRoute():
 @update_routes.route("/updateIdentity", methods=["PUT"])
 def updateIdentityRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -156,7 +156,7 @@ def updateIdentityRoute():
 @update_routes.route("/updateLicense", methods=["PUT"])
 def updateLicenseRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 

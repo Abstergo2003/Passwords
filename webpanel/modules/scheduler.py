@@ -2,8 +2,9 @@ import logging
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from modules.backups import create_backup
+from modules.geoip_utils import update_geoip_database
 
-# Konfiguracja logowania, żebyś widział w konsoli, że backup się robi
+# Konfiguracja logowania
 logging.basicConfig()
 logger = logging.getLogger("apscheduler")
 logger.setLevel(logging.INFO)
@@ -19,14 +20,22 @@ def run_backup_job():
         print(f"SCHEDULER: BŁĄD! Nie udało się wykonać kopii: {msg}", flush=True)
 
 
+def run_geoip_update_job():
+    """Funkcja wrapper do aktualizacji bazy GeoIP."""
+    print("SCHEDULER: Sprawdzam aktualizacje bazy GeoIP...", flush=True)
+    success, msg = update_geoip_database()
+    if success:
+        print(f"SCHEDULER: GeoIP Sukces! {msg}", flush=True)
+    else:
+        print(f"SCHEDULER: GeoIP BŁĄD! {msg}", flush=True)
+
+
 def start_scheduler():
     """Inicjalizuje i uruchamia harmonogram."""
     scheduler = BackgroundScheduler()
 
-    # DODAWANIE ZADANIA:
-    # Uruchom codziennie o 03:00 nad ranem
-    # Uwaga: Czas kontenera to zazwyczaj UTC.
-    # Jeśli jesteś w Polsce (UTC+1/+2), 03:00 UTC to 04:00 lub 05:00 czasu polskiego.
+    # ZADANIE 1: Backup Bazy Danych
+    # Codziennie o 03:00
     scheduler.add_job(
         func=run_backup_job,
         trigger=CronTrigger(hour=3, minute=0),
@@ -35,8 +44,15 @@ def start_scheduler():
         replace_existing=True,
     )
 
-    # Opcjonalnie: Zadanie testowe, które uruchamia się co godzinę (zakomentuj jeśli nie chcesz)
-    # scheduler.add_job(run_backup_job, 'interval', hours=1)
+    # ZADANIE 2: Aktualizacja GeoIP
+    # Raz w tygodniu (Środa 04:00) - dzień po aktualizacji MaxMind
+    scheduler.add_job(
+        func=run_geoip_update_job,
+        trigger=CronTrigger(day_of_week="wed", hour=4, minute=0),
+        id="weekly_geoip_update",
+        name="Aktualizacja bazy GeoIP",
+        replace_existing=True,
+    )
 
     scheduler.start()
-    print("SCHEDULER: Harmonogram został uruchomiony.", flush=True)
+    print("SCHEDULER: Harmonogram został uruchomiony (Backup + GeoIP).", flush=True)

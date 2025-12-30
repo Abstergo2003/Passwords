@@ -24,7 +24,7 @@ delete_routes = Blueprint("delete", __name__)
 @delete_routes.route("/deletePassword", methods=["DELETE"])
 def deletePasswordRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -43,7 +43,7 @@ def deletePasswordRoute():
 @delete_routes.route("/deleteNote", methods=["DELETE"])
 def deleteNoteRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -63,7 +63,7 @@ def deleteNoteRoute():
 @delete_routes.route("/deleteCreditCard", methods=["DELETE"])
 def deleteCreditCardRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -83,7 +83,7 @@ def deleteCreditCardRoute():
 @delete_routes.route("/deleteIdentity", methods=["DELETE"])
 def deleteIdentityRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -103,7 +103,7 @@ def deleteIdentityRoute():
 @delete_routes.route("/deleteLicense", methods=["DELETE"])
 def deleteLicenseRoute():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 

@@ -28,6 +28,8 @@ services:
     depends_on:
       - db
       - mail
+    volumes:
+      - ./geoip:/geoip
     ports:
       - "127.0.0.1:5000:5000"
     environment:
@@ -58,6 +60,7 @@ services:
       - "127.0.0.1:5050:5050"
     volumes:
       - ./database_backups:/backups
+      - ./geoip:/geoip
     environment:
       SECRET_KEY: ${SECRET_KEY}
       TOKEN_TIMEDELTA: ${TOKEN_TIMEDELTA}

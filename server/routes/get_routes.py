@@ -26,7 +26,7 @@ get_routes = Blueprint("get", __name__)
 @get_routes.route("/getItems", methods=["GET"])
 def getItems():
     token = request.cookies.get("token")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id != None:
         items = getTeasedItems(user_id)
         response = make_response({"status": "ok"}, 200)
@@ -40,7 +40,7 @@ def getItems():
 def getPasswordRoute():
     token = request.cookies.get("token")
     item_id = request.cookies.get("id")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -58,7 +58,7 @@ def getPasswordRoute():
 def getNoteRoute():
     token = request.cookies.get("token")
     item_id = request.cookies.get("id")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -76,7 +76,7 @@ def getNoteRoute():
 def getCreditCardRoute():
     token = request.cookies.get("token")
     item_id = request.cookies.get("id")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -94,7 +94,7 @@ def getCreditCardRoute():
 def getIdentityRoute():
     token = request.cookies.get("token")
     item_id = request.cookies.get("id")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 
@@ -112,7 +112,7 @@ def getIdentityRoute():
 def getLicenseRoute():
     token = request.cookies.get("token")
     item_id = request.cookies.get("id")
-    user_id = verify_jwt(token)
+    user_id = user_id = verify_jwt(token, request.remote_addr)
     if user_id is None:
         return generateUnauthorized()
 

@@ -64,7 +64,7 @@ if ALLOW_REGISTER == "1":
         qr_base64 = register2fa(user_id)
 
         resp = make_response({"status": "ok"})
-        token = generate_jwt(user_id)
+        token = generate_jwt(user_id, request.remote_addr)
         resp.set_cookie("token", token, httponly=True, samesite="Lax")
         resp.set_cookie("qr_code", qr_base64)
         return resp
@@ -81,9 +81,8 @@ def login_route():
     # loginUser verifies Bcrypt(auth_hash) matches DB
     [result, user_id] = loginUser(email, auth_hash, bcrypt)
     ver_result = verify2fa(user_id, code)
-
     if result and ver_result:
-        token = generate_jwt(user_id)
+        token = generate_jwt(user_id, request.remote_addr)
         response = make_response({"status": "ok"}, 200)
         response.set_cookie("token", token, httponly=True, samesite="Lax")
         return response

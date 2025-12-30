@@ -9,3 +9,4 @@ jsonschema
 requests
 cryptography
 gunicorn
+geoip2==4.7.0

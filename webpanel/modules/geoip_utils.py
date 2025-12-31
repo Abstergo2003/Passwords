@@ -10,7 +10,11 @@ DOWNLOAD_URL = (
 
 
 def get_geoip_status() -> dict:
-    """Zwraca datę ostatniej modyfikacji pliku bazy."""
+    """Return data about last file update
+
+    Returns:
+        dict: [exists, last_modified, size_mb]
+    """
     if not os.path.exists(GEOIP_PATH):
         return {"exists": False, "last_modified": "Brak pliku"}
 
@@ -26,7 +30,11 @@ def get_geoip_status() -> dict:
 
 
 def update_geoip_database() -> tuple[bool, str]:
-    """Pobiera nową wersję bazy GeoIP."""
+    """Donwload new version of geoip database file
+
+    Returns:
+        tuple[bool, str]: [result, message]
+    """
     try:
         print("GEOIP: Rozpoczynam pobieranie...", flush=True)
         response = requests.get(DOWNLOAD_URL, stream=True, timeout=30)

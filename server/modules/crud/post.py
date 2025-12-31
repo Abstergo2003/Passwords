@@ -3,6 +3,14 @@ import uuid
 
 
 def addPassword(user_id: str, data: dict) -> bool:
+    """Adds password to database
+    Args:
+        user_id (str): Client's ID in database
+        data (dict): Items's data
+
+    Returns:
+        bool: Result of operatrion
+    """
     [connection, cursor] = connectToDatabase()
     sql = """
     WITH new_password_entry AS (
@@ -25,11 +33,11 @@ def addPassword(user_id: str, data: dict) -> bool:
         sql,
         (
             passwordID,
-            data.get("email"),
-            data.get("login"),
-            data.get("password"),
-            data.get("domain"),
-            data.get("tfa"),
+            data.get("email", ""),
+            data.get("login", ""),
+            data.get("password", ""),
+            data.get("domain", ""),
+            data.get("tfa", ""),
             False,
             user_id,
             passwordID,
@@ -41,6 +49,14 @@ def addPassword(user_id: str, data: dict) -> bool:
 
 
 def addNote(user_id: str, data: dict) -> bool:
+    """Adds note to database
+    Args:
+        user_id (str): Client's ID in database
+        data (dict): Items's data
+
+    Returns:
+        bool: Result of operatrion
+    """
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -73,6 +89,14 @@ def addNote(user_id: str, data: dict) -> bool:
 
 
 def addIdentity(user_id: str, data: dict) -> bool:
+    """Adds identity to database
+    Args:
+        user_id (str): Client's ID in database
+        data (dict): Items's data
+
+    Returns:
+        bool: Result of operatrion
+    """
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -110,6 +134,14 @@ def addIdentity(user_id: str, data: dict) -> bool:
 
 
 def addCreditCard(user_id: str, data: dict) -> bool:
+    """Adds vredit card to database
+    Args:
+        user_id (str): Client's ID in database
+        data (dict): Items's data
+
+    Returns:
+        bool: Result of operatrion
+    """
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -146,6 +178,14 @@ def addCreditCard(user_id: str, data: dict) -> bool:
 
 
 def addLicense(user_id: str, data: dict) -> bool:
+    """Adds license to database
+    Args:
+        user_id (str): Client's ID in database
+        data (dict): Items's data
+
+    Returns:
+        bool: Result of operatrion
+    """
     [connection, cursor] = connectToDatabase()
 
     sql = """

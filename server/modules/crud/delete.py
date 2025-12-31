@@ -2,6 +2,14 @@ from modules.database import connectToDatabase
 
 
 def deletePassword(user_id: str, password_id: str) -> bool:
+    """Deletes password from database
+    Args:
+        user_id (str): Client's ID in database
+        password_id (str): Items's ID in database
+
+    Returns:
+        bool: Result of operation
+    """
     [connection, cursor] = connectToDatabase()
     sql = """
     WITH deleted_relationship AS (
@@ -23,6 +31,14 @@ def deletePassword(user_id: str, password_id: str) -> bool:
 
 
 def deleteNote(user_id: str, note_id: str) -> bool:
+    """Deletes note from database
+    Args:
+        user_id (str): Client's ID in database
+        note_id (str): Items's ID in database
+
+    Returns:
+        bool: Result of operation
+    """
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -43,6 +59,14 @@ def deleteNote(user_id: str, note_id: str) -> bool:
 
 
 def deleteIdentity(user_id: str, identity_id: str) -> bool:
+    """Deletes identity from database
+    Args:
+        user_id (str): Client's ID in database
+        identity_id (str): Items's ID in database
+
+    Returns:
+        bool: Result of operation
+    """
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -63,6 +87,14 @@ def deleteIdentity(user_id: str, identity_id: str) -> bool:
 
 
 def deleteCreditCard(user_id: str, card_id: str) -> bool:
+    """Deletes creditCard from database
+    Args:
+        user_id (str): Client's ID in database
+        card_id (str): Items's ID in database
+
+    Returns:
+        bool: Result of operation
+    """
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -83,6 +115,14 @@ def deleteCreditCard(user_id: str, card_id: str) -> bool:
 
 
 def deleteLicense(user_id: str, license_id: str) -> bool:
+    """Deletes license from database
+    Args:
+        user_id (str): Client's ID in database
+        license_id (str): Items's ID in database
+
+    Returns:
+        bool: Result of operation
+    """
     [connection, cursor] = connectToDatabase()
 
     sql = """

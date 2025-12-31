@@ -8,6 +8,14 @@ from modules.database import connectToDatabase
 
 
 def generate_2fa_qrcode(email: str) -> list[str]:
+    """Generates qr code for 2fa
+
+    Args:
+        email (str): Client's email in database
+
+    Returns:
+        list[str]: [key, qr_base64]
+    """
     key = pyotp.random_base32()
     uri = pyotp.totp.TOTP(key).provisioning_uri(
         name=email, issuer_name="Passwords## by Abstergo##"
@@ -20,6 +28,16 @@ def generate_2fa_qrcode(email: str) -> list[str]:
 
 
 def verify2fa(id: str, code: str) -> bool:
+    """Verifies provided 2fa code
+
+    Args:
+        id (str): Client's ID in database
+        code (str): 2fa code
+
+    Returns:
+        bool: Result of verification
+    """
+
     [connection, cursor] = connectToDatabase()
     sql_serach = """
         SELECT * FROM Users WHERE id = %s
@@ -36,6 +54,14 @@ def verify2fa(id: str, code: str) -> bool:
 
 
 def register2fa(id: str) -> str:
+    """Registers 2fa for Client in database
+
+    Args:
+        id (str): Client's ID in database
+
+    Returns:
+        str: base64 of qr code for 2fa
+    """
     [connection, cursor] = connectToDatabase()
     sql_serach = """
         SELECT * FROM Users WHERE id = %s

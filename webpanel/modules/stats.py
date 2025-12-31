@@ -6,7 +6,11 @@ from modules.database import connectToDatabase
 
 
 def check_inbucket_health() -> bool:
-    """Sprawdza czy kontener mailowy żyje"""
+    """Checks inbucket status
+
+    Returns:
+        bool: True if healthy
+    """
     try:
         # Wewnątrz sieci Dockerowej łączymy się po nazwie serwisu 'mail'
         r = requests.get("http://mail:9000/status", timeout=1)
@@ -16,8 +20,10 @@ def check_inbucket_health() -> bool:
 
 
 def check_frp_health() -> bool | None:
-    """
-    Sprawdza czy tunele FRP są aktywne, odpytując Admin UI.
+    """Checks frp proxies status
+
+    Returns:
+        bool | None: True if all healthy
     """
     try:
         # Łączymy się z kontenerem 'frpc' (zdefiniowanym w docker-compose)
@@ -36,6 +42,11 @@ def check_frp_health() -> bool | None:
 
 # --- STATYSTYKI ---
 def get_dashboard_data() -> dict:
+    """Gets all data for dashboard
+
+    Returns:
+        dict: [cpu, ram, mail_service, frp_service, db_status, total_items, items_breakdown, total_users, top_domain, user_list]
+    """
     data = {}
 
     # --- 1. HEALTHCHECK (INFRASTRUKTURA) ---
@@ -129,9 +140,13 @@ def get_dashboard_data() -> dict:
 
 # --- ZARZĄDZANIE (DELETE) ---
 def delete_user_fully(user_id_to_delete: str) -> bool:
-    """
-    Usuwa użytkownika i kaskadowo wszystkie jego dane.
-    Musi usunąć wpisy z tabel łącznikowych ORAZ właściwych tabel z danymi.
+    """Deletes Client and his data from database
+
+    Args:
+        user_id_to_delete (str): Client's ID in database
+
+    Returns:
+        bool: Result of operation
     """
     [conn, cursor] = connectToDatabase()
     if not conn:

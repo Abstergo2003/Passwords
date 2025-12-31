@@ -14,6 +14,11 @@ bcrypt = Bcrypt()
 
 
 def generateUnauthorized() -> Response:
+    """Generates response for 401 error
+
+    Returns:
+        Response: 401 error response
+    """
     response = make_response(
         {"error": "Unauthorized"},
         401,

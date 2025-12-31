@@ -2,6 +2,14 @@ from modules.database import connectToDatabase
 
 
 def getPassword(user_id: str, password_id: str) -> dict:
+    """Retrieves password from database
+    Args:
+        user_id (str): Client's ID in database
+        password_id (str): Items's ID in database
+
+    Returns:
+        dict: Password dict from database
+    """
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT 
@@ -30,6 +38,14 @@ def getPassword(user_id: str, password_id: str) -> dict:
 
 
 def getNote(user_id: str, note_id: str) -> dict:
+    """Retrieves note from database
+    Args:
+        user_id (str): Client's ID in database
+        note_id (str): Items's ID in database
+
+    Returns:
+        dict: Note dict from database
+    """
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT 
@@ -55,6 +71,14 @@ def getNote(user_id: str, note_id: str) -> dict:
 
 
 def getLicense(user_id: str, license_id: str) -> dict:
+    """Retrieves license from database
+    Args:
+        user_id (str): Client's ID in database
+        license_id (str): Items's ID in database
+
+    Returns:
+        dict: License dict from database
+    """
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT 
@@ -80,6 +104,14 @@ def getLicense(user_id: str, license_id: str) -> dict:
 
 
 def getIdentity(user_id: str, identity_id: str) -> dict:
+    """Retrieves Identity from database
+    Args:
+        user_id (str): Client's ID in database
+        identity_id (str): Items's ID in database
+
+    Returns:
+        dict: Identity dict from database
+    """
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT 
@@ -109,7 +141,15 @@ def getIdentity(user_id: str, identity_id: str) -> dict:
     return item
 
 
-def getCreditCard(user_id: str, note_id: str) -> dict:
+def getCreditCard(user_id: str, card_id: str) -> dict:
+    """Retrieves credit card from database
+    Args:
+        user_id (str): Client's ID in database
+        card_id (str): Items's ID in database
+
+    Returns:
+        dict: Password dict from database
+    """
     [connection, cursor] = connectToDatabase()
     sql = """
         SELECT 
@@ -128,7 +168,7 @@ def getCreditCard(user_id: str, note_id: str) -> dict:
             pu.Users_id = %s 
             AND p.id = %s;
     """
-    cursor.execute(sql, (user_id, note_id))
+    cursor.execute(sql, (user_id, card_id))
     items = cursor.fetchall()
     if len(items) == 0:
         return {}

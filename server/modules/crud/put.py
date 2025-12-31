@@ -2,6 +2,15 @@ from modules.database import connectToDatabase
 
 
 def updatePassword(user_id: str, password_id: str, data: dict) -> bool:
+    """Updates password in database
+    Args:
+        user_id (str): Client's ID in database
+        password_id (str): Item's ID in database
+        data (dict): Items's data
+
+    Returns:
+        bool: Result of operatrion
+    """
     [connection, cursor] = connectToDatabase()
     sql = """
     UPDATE Password
@@ -22,11 +31,11 @@ def updatePassword(user_id: str, password_id: str, data: dict) -> bool:
     cursor.execute(
         sql,
         (
-            data.get("login"),
-            data.get("password"),
-            data.get("email"),
-            data.get("domain"),
-            data.get("tfa"),
+            data.get("login", ""),
+            data.get("password", ""),
+            data.get("email", ""),
+            data.get("domain", ""),
+            data.get("tfa", ""),
             password_id,
             user_id,
         ),
@@ -37,6 +46,16 @@ def updatePassword(user_id: str, password_id: str, data: dict) -> bool:
 
 
 def updateNote(user_id: str, note_id: str, data: dict) -> bool:
+    """Updates note in database
+    Args:
+        user_id (str): Client's ID in database
+        note_id (str): Item's ID in database
+        data (dict): Items's data
+
+    Returns:
+        bool: Result of operatrion
+    """
+
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -63,6 +82,15 @@ def updateNote(user_id: str, note_id: str, data: dict) -> bool:
 
 
 def updateIdentity(user_id: str, identity_id: str, data: dict) -> bool:
+    """Updates identity in database
+    Args:
+        user_id (str): Client's ID in database
+        identity_id (str): Item's ID in database
+        data (dict): Items's data
+
+    Returns:
+        bool: Result of operatrion
+    """
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -104,6 +132,15 @@ def updateIdentity(user_id: str, identity_id: str, data: dict) -> bool:
 
 
 def updateCreditCard(user_id: str, card_id: str, data: dict) -> bool:
+    """Updates credit card in database
+    Args:
+        user_id (str): Client's ID in database
+        card_id (str): Item's ID in database
+        data (dict): Items's data
+
+    Returns:
+        bool: Result of operatrion
+    """
     [connection, cursor] = connectToDatabase()
 
     sql = """
@@ -142,6 +179,15 @@ def updateCreditCard(user_id: str, card_id: str, data: dict) -> bool:
 
 
 def updateLicense(user_id: str, license_id: str, data: dict) -> bool:
+    """Updates license in database
+    Args:
+        user_id (str): Client's ID in database
+        note_id (str): Item's ID in database
+        data (dict): Items's data
+
+    Returns:
+        bool: Result of operatrion
+    """
     [connection, cursor] = connectToDatabase()
 
     sql = """

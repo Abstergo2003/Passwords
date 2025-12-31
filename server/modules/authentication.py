@@ -18,9 +18,13 @@ GEOIP_DB_PATH = "/geoip/GeoLite2-Country.mmdb"
 
 
 def get_ip_location(ip_address: str) -> str:
-    """
-    Zwraca kraj na podstawie IP używając lokalnej bazy MaxMind.
-    Czas wykonania: < 1ms.
+    """Return geolocalization based on IP
+
+    Args:
+        ip_address (str): IP of client
+
+    Returns:
+        str: Country Name
     """
     # 1. Ignoruj sieci lokalne (Docker, LAN)
     if ip_address.startswith(("127.", "10.", "172.", "192.168.")):
@@ -41,7 +45,7 @@ def get_ip_location(ip_address: str) -> str:
                 return country_name
             return "Unknown"
 
-    except geoip2.errors.AddressNotFoundError:
+    except geoip2.errors.AddressNotFoundError:  # type: ignore
         # IP nie ma w bazie (np. nowe IP lub lokalne)
         return "Unknown"
     except Exception as e:
@@ -50,6 +54,15 @@ def get_ip_location(ip_address: str) -> str:
 
 
 def generate_jwt(user_id: str, remote_addr: str) -> str:
+    """Generates JWT token for authorization
+
+    Args:
+        user_id (str): Clients ID in database
+        remote_addr (str): Clients IP Address
+
+    Returns:
+        str: JWT token
+    """
     payload = {
         "id": user_id,
         "exp": datetime.datetime.now(datetime.timezone.utc)
@@ -60,6 +73,15 @@ def generate_jwt(user_id: str, remote_addr: str) -> str:
 
 
 def verify_jwt(token: str, remote_addr: str) -> str | None:
+    """Verify's JWT token, ancd check if country of issue matches with current one
+
+    Args:
+        token (str): JWT token
+        remote_addr (str): Clients IP address
+
+    Returns:
+        str | None: Clients ID in database
+    """
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
         if get_ip_location(remote_addr) == payload.get("cnt"):
@@ -71,6 +93,17 @@ def verify_jwt(token: str, remote_addr: str) -> str | None:
 
 
 def registerUser(email: str, auth_hash: str, salt: str, bcrypt: Bcrypt) -> str:
+    """Registers new Client in database
+
+    Args:
+        email (str): Client's email
+        auth_hash (str): Hash of clients password
+        salt (str): salt
+        bcrypt (Bcrypt): Bcypr object for storage security
+
+    Returns:
+        str: Client's ID in database
+    """
     [connection, cursor] = connectToDatabase()
     user_id = str(uuid.uuid4())
 
@@ -89,6 +122,14 @@ def registerUser(email: str, auth_hash: str, salt: str, bcrypt: Bcrypt) -> str:
 
 
 def getSalt(email: str) -> str | None:
+    """Returns Client's salt
+
+    Args:
+        email (str): Client's email
+
+    Returns:
+        str | None: Client's salt
+    """
     [connection, cursor] = connectToDatabase()
     # Note: Use '=' for SQL comparison, not '=='
     sql_search = "SELECT encryption_salt FROM Users WHERE email = %s"
@@ -102,6 +143,16 @@ def getSalt(email: str) -> str | None:
 
 
 def loginUser(email: str, password: str, bcrypt: Bcrypt) -> tuple[bool, str | None]:
+    """Logins Client
+
+    Args:
+        email (str): Client's Email
+        password (str): Client's password
+        bcrypt (Bcrypt): Bcrypt object to compase password hash
+
+    Returns:
+        str | None: _description_
+    """
     [connection, cursor] = connectToDatabase()
     sql_serach = """
         SELECT * FROM Users WHERE email = %s
@@ -117,6 +168,14 @@ def loginUser(email: str, password: str, bcrypt: Bcrypt) -> tuple[bool, str | No
 
 
 def checkEmailFree(email: str) -> bool:
+    """Checks if email is Free in database
+
+    Args:
+        email (str): Future Client's email
+
+    Returns:
+        bool: Boolean value of wheter email is free
+    """
     [connection, cursor] = connectToDatabase()
     sql_serach = """
         SELECT * FROM Users WHERE email = %s

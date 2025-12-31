@@ -7,7 +7,15 @@ INBUCKET_API = "http://mail:9000/api/v1/mailbox"
 
 
 def addMailbox(user_id: str, mailbox_name: str) -> bool:
-    """Zapisuje nową skrzynkę przypisaną do użytkownika."""
+    """Saves new mailbox assigned to Client
+
+    Args:
+        user_id (str): Client's ID in database
+        mailbox_name (str): Alias of mailbox ex test@test.com
+
+    Returns:
+        bool: Result of operation
+    """
     [connection, cursor] = connectToDatabase()
     mailbox_id = str(uuid.uuid4())
     sql = "INSERT INTO Users_mail (id, Users_id, mail) VALUES (%s, %s, %s);"
@@ -23,7 +31,14 @@ def addMailbox(user_id: str, mailbox_name: str) -> bool:
 
 
 def getUserMailboxes(user_id: str) -> list:
-    """Pobiera listę wszystkich skrzynek należących do użytkownika."""
+    """Gets mailboxes assigned to Client
+
+    Args:
+        user_id (str): Client's ID in database
+
+    Returns:
+        list: list of Client assigned mailboxes
+    """
     [connection, cursor] = connectToDatabase()
     sql = "SELECT mail FROM Users_mail WHERE Users_id = %s;"
     cursor.execute(sql, (user_id,))
@@ -33,7 +48,15 @@ def getUserMailboxes(user_id: str) -> list:
 
 
 def checkMailboxOwnership(user_id: str, mailbox_name: str) -> bool:
-    """Sprawdza, czy dana skrzynka należy do użytkownika."""
+    """Checks whether mailbox is assigned to Client
+
+    Args:
+        user_id (str): Client's ID in database
+        mailbox_name (str): Alias of mailbox
+
+    Returns:
+        bool: Result of being assigned to Client
+    """
     [connection, cursor] = connectToDatabase()
     sql = "SELECT 1 FROM Users_mail WHERE Users_id = %s AND mail = %s;"
     cursor.execute(sql, (user_id, mailbox_name))
@@ -43,7 +66,15 @@ def checkMailboxOwnership(user_id: str, mailbox_name: str) -> bool:
 
 
 def deleteMailbox(user_id: str, mailbox_name: str) -> bool:
-    """Usuwa skrzynkę z bazy danych i czyści ją fizycznie w Inbucket."""
+    """Delete's mailbox from database and clears mails
+
+    Args:
+        user_id (str): Client's ID in database
+        mailbox_name (str): Alias of mailbox
+
+    Returns:
+        bool: Result of deletion operation
+    """
     [connection, cursor] = connectToDatabase()
     sql = "DELETE FROM Users_mail WHERE Users_id = %s AND mail = %s;"
     try:

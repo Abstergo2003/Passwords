@@ -2,22 +2,16 @@ from jsonschema import validate, ValidationError
 import uuid
 
 
-USER_EDITABLE_TABLES = [
-    "Password",
-    "Notes",
-    "CreditCard",
-    "Identity",
-    "CreditCard",
-    "License",
-]
-
-
 # --- Base Validation Function ---
 def validate_payload(data: dict, schema: dict) -> tuple[bool, str | None]:
-    """
-    Validates data against the schema.
-    Returns (True, None) if valid.
-    Returns (False, error_message) if invalid.
+    """Validates data against schema
+
+    Args:
+        data (dict): Data to validate
+        schema (dict): Schema from predefined
+
+    Returns:
+        tuple[bool, str | None]: (result of validation, error | None)
     """
     try:
         validate(instance=data, schema=schema)
@@ -33,6 +27,7 @@ def validate_payload(data: dict, schema: dict) -> tuple[bool, str | None]:
 password_schema = {
     "type": "object",
     "properties": {
+        "id": {"type": "string"},
         "email": {"type": "string"},
         "login": {"type": "string"},
         "password": {"type": "string"},
@@ -47,6 +42,7 @@ password_schema = {
 note_schema = {
     "type": "object",
     "properties": {
+        "id": {"type": "string"},
         "name": {"type": "string"},
         "content": {"type": "string"},
     },
@@ -58,6 +54,7 @@ note_schema = {
 credit_card_schema = {
     "type": "object",
     "properties": {
+        "id": {"type": "string"},
         "bankName": {"type": "string"},
         "number": {"type": "string"},
         "brand": {"type": "string"},
@@ -73,6 +70,7 @@ credit_card_schema = {
 identity_schema = {
     "type": "object",
     "properties": {
+        "id": {"type": "string"},
         "name": {"type": "string"},
         "surname": {"type": "string"},
         "country": {"type": "string"},
@@ -97,6 +95,7 @@ identity_schema = {
 license_schema = {
     "type": "object",
     "properties": {
+        "id": {"type": "string"},
         "name": {"type": "string"},
         # 'diverse' is JSONB in DB, so we accept object OR string here
         "diverse": {"type": ["object", "string"]},
@@ -107,8 +106,13 @@ license_schema = {
 
 
 def validate_uuid4(uuid_string: str) -> bool:
-    """
-    Returns True if uuid_string is a valid version 4 UUID.
+    """Validates whether provided ID is in correct format of uuid4
+
+    Args:
+        uuid_string (str): ID to be validated
+
+    Returns:
+        bool: Result of validation
     """
     if not uuid_string:
         return False

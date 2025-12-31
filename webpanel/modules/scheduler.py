@@ -11,7 +11,7 @@ logger.setLevel(logging.INFO)
 
 
 def run_backup_job():
-    """Funkcja wrapper, która wywołuje backup i loguje wynik."""
+    """Wrapper function to create backup"""
     print("SCHEDULER: Rozpoczynam automatyczny backup...", flush=True)
     success, msg = create_backup()
     if success:
@@ -21,7 +21,7 @@ def run_backup_job():
 
 
 def run_geoip_update_job():
-    """Funkcja wrapper do aktualizacji bazy GeoIP."""
+    """Wrapper function to update geoip file"""
     print("SCHEDULER: Sprawdzam aktualizacje bazy GeoIP...", flush=True)
     success, msg = update_geoip_database()
     if success:
@@ -31,11 +31,11 @@ def run_geoip_update_job():
 
 
 def start_scheduler():
-    """Inicjalizuje i uruchamia harmonogram."""
+    """Initalizes and starts scheduler"""
     scheduler = BackgroundScheduler()
 
-    # ZADANIE 1: Backup Bazy Danych
-    # Codziennie o 03:00
+    # Task 1: Database backup
+    # Everydar at 03:00
     scheduler.add_job(
         func=run_backup_job,
         trigger=CronTrigger(hour=3, minute=0),
@@ -43,9 +43,10 @@ def start_scheduler():
         name="Tworzenie codziennej kopii bazy",
         replace_existing=True,
     )
-
-    # ZADANIE 2: Aktualizacja GeoIP
-    # Raz w tygodniu (Środa 04:00) - dzień po aktualizacji MaxMind
+    # first run for anyone downloadiung project
+    run_geoip_update_job()
+    # Task 2: GeoIP update
+    # Once a week (Thursday 04:00)
     scheduler.add_job(
         func=run_geoip_update_job,
         trigger=CronTrigger(day_of_week="wed", hour=4, minute=0),
